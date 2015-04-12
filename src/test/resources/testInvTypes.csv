@@ -1,0 +1,29 @@
+TYPEID,GROUPID,TYPENAME,DESCRIPTION,MASS,VOLUME,CAPACITY,PORTIONSIZE,RACEID,BASEPRICE,PUBLISHED,MARKETGROUPID,CHANCEOFDUPLICATING
+34,18,Tritanium,"The main building block in space structures. A very hard, yet bendable metal. Cannot be used in human habitats due to its instability at atmospheric temperatures. Very common throughout the universe.
+
+May be obtained by reprocessing the following ores:
+
+<color='0xFFFF0000'>0.0</color> security status solar system or lower:
+<a href=showinfo:22>Arkonor</a>, <a href=showinfo:17425>Crimson Arkonor</a>, <a href=showinfo:17426>Prime Arkonor</a>
+<a href=showinfo:1225>Crokite</a>, <a href=showinfo:17432>Sharp Crokite</a>, <a href=showinfo:17433>Crystalline Crokite</a>
+<a href=showinfo:1232>Dark Ochre</a>, <a href=showinfo:17436>Onyx Ochre</a>, <a href=showinfo:17437>Obsidian Ochre</a>
+<a href=showinfo:1229>Gneiss</a>, <a href=showinfo:17865>Iridescent Gneiss</a>, <a href=showinfo:17866>Prismatic Gneiss</a>
+<a href=showinfo:19>Spodumain</a>, <a href=showinfo:17466>Bright Spodumain</a>, <a href=showinfo:17467>Gleaming Spodumain</a>
+
+<color='0xFFFF4D00'>0.2</color> security status solar system or lower:
+<a href=showinfo:1231>Hemorphite</a>, <a href=showinfo:17444>Vivid Hemorphite</a>, <a href=showinfo:17445>Radiant Hemorphite</a>
+
+<color='0xFFE58000'>0.4</color> security status solar system or lower:
+<a href=showinfo:1226>Jaspet</a>, <a href=showinfo:17448>Pure Jaspet</a>, <a href=showinfo:17449>Pristine Jaspet</a>
+
+<color='0xFF00FF00'>0.7</color> security status solar system or lower:
+<a href=showinfo:20>Kernite</a>, <a href=showinfo:17452>Luminous Kernite</a>, <a href=showinfo:17453>Fiery Kernite</a>
+<a href=showinfo:1227>Omber</a>, <a href=showinfo:17867>Silvery Omber</a>, <a href=showinfo:17868>Golden Omber</a>
+
+<color='0xFF4DFFCC'>0.9</color> security status solar system or lower:
+<a href=showinfo:18>Plagioclase</a>, <a href=showinfo:17455>Azure Plagioclase</a>, <a href=showinfo:17456>Rich Plagioclase</a>
+<a href=showinfo:1224>Pyroxeres</a>, <a href=showinfo:17459>Solid Pyroxeres</a>, <a href=showinfo:17460>Viscous Pyroxeres</a>
+
+<color='0xFF33FFFF'>1.0</color> security status solar system or lower:
+<a href=showinfo:1228>Scordite</a>, <a href=showinfo:17463>Condensed Scordite</a>, <a href=showinfo:17464>Massive Scordite</a>
+<a href=showinfo:1230>Veldspar</a>, <a href=showinfo:17470>Concentrated Veldspar</a>, <a href=showinfo:17471>Dense Veldspar</a>",0,0.01,0,1,,2,1,1857,0
