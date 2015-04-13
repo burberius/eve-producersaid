@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyright (c) 2015 Jens Oberender <j.obi@troja.net>
  *
- * This file is part of Producer's Aid.
+ * This file is part of Eve Producer's Aid.
  *
- * Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -91,7 +91,6 @@ public class BlueprintsReader {
 	Iterator<Entry<String, JsonNode>> activities = node.path(NODE_ACTIVITIES).fields();
 	while(activities.hasNext()) {
 	    Entry<String, JsonNode> work = activities.next();
-	    LOGGER.info("Name " + work.getKey());
 	    BlueprintActivity activity = processActivity(work.getValue());
 	    switch (work.getKey()) {
 	    case "copying":
