@@ -17,28 +17,36 @@
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  *******************************************************************************/
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.data;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+public class BlueprintMaterial {
+    private int typeId;
+    private int quantity;
 
-import java.util.Map;
+    public BlueprintMaterial(int typeId, int quantity) {
+	super();
+	this.typeId = typeId;
+	this.quantity = quantity;
+    }
 
-import net.troja.eve.producersaid.data.InvType;
+    public int getTypeId() {
+	return typeId;
+    }
 
-import org.junit.Test;
+    public void setTypeId(int typeId) {
+	this.typeId = typeId;
+    }
 
-public class InvTypesReaderTest {
-    @Test
-    public void testRead() {
-	InvTypesReader reader = new InvTypesReader();
-	reader.setDataFile("testInvTypes.csv");
-	Map<Integer, InvType> invTypes = reader.getInvTypes();
-	assertNotNull(invTypes);
-	assertTrue(invTypes.size() > 0);
-	InvType trit = invTypes.get(34);
-	assertThat(trit.getVolume(), is(0.01d));
+    public int getQuantity() {
+	return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+	this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+	return "BlueprintMaterials [typeId=" + typeId + ", quantity=" + quantity + "]";
     }
 }

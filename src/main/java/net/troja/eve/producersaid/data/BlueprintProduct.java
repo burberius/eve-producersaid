@@ -17,28 +17,26 @@
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  *******************************************************************************/
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.data;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+public class BlueprintProduct extends BlueprintMaterial {
+    private float probability;
+    
+    public BlueprintProduct(int typeId, int quantity, float probability) {
+	super(typeId, quantity);
+	this.probability = probability;
+    }
 
-import java.util.Map;
+    public float getProbability() {
+        return probability;
+    }
 
-import net.troja.eve.producersaid.data.InvType;
+    public void setProbability(float probability) {
+        this.probability = probability;
+    }
 
-import org.junit.Test;
-
-public class InvTypesReaderTest {
-    @Test
-    public void testRead() {
-	InvTypesReader reader = new InvTypesReader();
-	reader.setDataFile("testInvTypes.csv");
-	Map<Integer, InvType> invTypes = reader.getInvTypes();
-	assertNotNull(invTypes);
-	assertTrue(invTypes.size() > 0);
-	InvType trit = invTypes.get(34);
-	assertThat(trit.getVolume(), is(0.01d));
+    @Override
+    public String toString() {
+	return "BlueprintProduct [probability=" + probability + ", typeId=" + getTypeId() + ", quantity=" + getQuantity() + "]";
     }
 }

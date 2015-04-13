@@ -1,0 +1,51 @@
+688:
+  activities:
+    copying:
+      time: 14400
+    invention:
+      materials:
+      - quantity: 32
+        typeID: 20411
+      - quantity: 32
+        typeID: 25887
+      products:
+      - probability: 0.22
+        quantity: 1
+        typeID: 28711
+      skills:
+      - level: 1
+        typeID: 11433
+      - level: 1
+        typeID: 21790
+      - level: 1
+        typeID: 11454
+      time: 192000
+    manufacturing:
+      materials:
+      - quantity: 10608667
+        typeID: 34
+      - quantity: 2652667
+        typeID: 35
+      - quantity: 664444
+        typeID: 36
+      - quantity: 165911
+        typeID: 37
+      - quantity: 41422
+        typeID: 38
+      - quantity: 9878
+        typeID: 39
+      - quantity: 3144
+        typeID: 40
+      products:
+      - quantity: 1
+        typeID: 638
+      skills:
+      - level: 1
+        typeID: 3380
+      time: 18000
+    research_material:
+      time: 6300
+    research_time:
+      time: 6300
+  blueprintTypeID: 688
+  maxProductionLimit: 10
