@@ -20,11 +20,10 @@
 package net.troja.eve.producersaid;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +67,14 @@ public class EveCentral {
 	priceCache = new HashMap<>();
     }
 
+
+    public EveCentralPrice getPrice(int typeId) {
+	if(!priceCache.containsKey(typeId)) {
+	    downloadPrices(Arrays.asList(typeId));
+	}
+	return priceCache.get(typeId);
+    }
+    
     public Map<Integer, EveCentralPrice> getPrices(final List<Integer> typeIds) {
 	final Map<Integer, EveCentralPrice> queryPrices = queryPrices(typeIds);
 	if (queryPrices.size() < typeIds.size()) {
@@ -180,4 +187,5 @@ public class EveCentral {
     public void setFilename(String name) {
 	fileName = name;
     }
+
 }

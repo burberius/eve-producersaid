@@ -27,6 +27,8 @@ public class Blueprint {
     private BlueprintActivity manufacturing;
     private BlueprintActivity researchMaterial;
     private BlueprintActivity researchTime;
+    private int materialEfficiency = 0;
+    private int timeEfficiency = 0;
 
     public int getId() {
 	return id;
@@ -84,9 +86,26 @@ public class Blueprint {
         this.researchTime = researchTime;
     }
 
+    public int getMaterialEfficiency() {
+        return materialEfficiency;
+    }
+
+    public void setMaterialEfficiency(int materialEfficiency) {
+        this.materialEfficiency = materialEfficiency;
+    }
+
+    public int getTimeEfficiency() {
+        return timeEfficiency;
+    }
+
+    public void setTimeEfficiency(int timeEfficiency) {
+        this.timeEfficiency = timeEfficiency;
+    }
+
     @Override
     public String toString() {
 	return "Blueprint [id=" + id + ", maxProductionLimit=" + maxProductionLimit + ", copying=" + copying + ", invention=" + invention
-		+ ", manufacturing=" + manufacturing + ", researchMaterial=" + researchMaterial + ", researchTime=" + researchTime + "]";
+		+ ", manufacturing=" + manufacturing + ", researchMaterial=" + researchMaterial + ", researchTime=" + researchTime
+		+ ", materialEfficiency=" + materialEfficiency + ", timeEfficiency=" + timeEfficiency + "]";
     }
 }
