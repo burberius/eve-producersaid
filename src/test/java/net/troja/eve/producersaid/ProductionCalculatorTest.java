@@ -87,10 +87,10 @@ public class ProductionCalculatorTest {
     private Blueprint createBlueprint() {
 	Blueprint blueprint = new Blueprint();
 	BlueprintActivity manufacturing = new BlueprintActivity();
-	manufacturing.setProducts(Arrays.asList(new BlueprintProduct(PRODUCT_ID, 100, 0)));
+	manufacturing.setProducts(Arrays.asList(new BlueprintProduct(PRODUCT_ID, "Product", 100, 0)));
 	List<BlueprintMaterial> materials = new ArrayList<>();
-	materials.add(new BlueprintMaterial(MATERIAL_ID1, 50));
-	materials.add(new BlueprintMaterial(MATERIAL_ID2, 25));
+	materials.add(new BlueprintMaterial(MATERIAL_ID1, "Material 1", 50));
+	materials.add(new BlueprintMaterial(MATERIAL_ID2, "Material 2", 25));
 	manufacturing.setMaterials(materials);
 	blueprint.setManufacturing(manufacturing);
 	return blueprint;

@@ -21,6 +21,7 @@ package net.troja.eve.producersaid.data;
 
 public class Blueprint {
     private int id;
+    private String name;
     private int maxProductionLimit;
     private BlueprintActivity copying;
     private BlueprintActivity invention;
@@ -36,6 +37,14 @@ public class Blueprint {
 
     public void setId(int id) {
 	this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getMaxProductionLimit() {
@@ -104,8 +113,8 @@ public class Blueprint {
 
     @Override
     public String toString() {
-	return "Blueprint [id=" + id + ", maxProductionLimit=" + maxProductionLimit + ", copying=" + copying + ", invention=" + invention
-		+ ", manufacturing=" + manufacturing + ", researchMaterial=" + researchMaterial + ", researchTime=" + researchTime
+	return "Blueprint [id=" + id + ", name=" + name + ", maxProductionLimit=" + maxProductionLimit + ", copying=" + copying + ", invention="
+		+ invention + ", manufacturing=" + manufacturing + ", researchMaterial=" + researchMaterial + ", researchTime=" + researchTime
 		+ ", materialEfficiency=" + materialEfficiency + ", timeEfficiency=" + timeEfficiency + "]";
     }
 }

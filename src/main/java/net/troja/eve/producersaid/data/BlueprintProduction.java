@@ -19,10 +19,13 @@
  *******************************************************************************/
 package net.troja.eve.producersaid.data;
 
+import net.troja.eve.producersaid.utils.EveFormatter;
+
 public class BlueprintProduction {
     private double productPrice;
     private double materialPriceBuy;
     private double materialPriceSell;
+    private Blueprint blueprint;
 
     public void setProductPrice(double productPrice) {
 	this.productPrice = productPrice;
@@ -46,5 +49,20 @@ public class BlueprintProduction {
 
     public void setMaterialPriceSell(double materialPriceSell) {
 	this.materialPriceSell = materialPriceSell;
+    }
+
+    public Blueprint getBlueprint() {
+	return blueprint;
+    }
+
+    public void setBlueprint(Blueprint blueprint) {
+	this.blueprint = blueprint;
+    }
+
+    @Override
+    public String toString() {
+	return "BlueprintProduction [blueprint=" + blueprint.getName() + ", productPrice=" + EveFormatter.formatIsk(productPrice)
+		+ ", materialPriceBuy=" + EveFormatter.formatIsk(materialPriceBuy) + ", materialPriceSell="
+		+ EveFormatter.formatIsk(materialPriceSell) + ", winBuy=" + EveFormatter.formatIsk(productPrice - materialPriceBuy) + "]";
     }
 }

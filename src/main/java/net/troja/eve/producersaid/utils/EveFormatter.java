@@ -17,46 +17,14 @@
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  *******************************************************************************/
-package net.troja.eve.producersaid.data;
+package net.troja.eve.producersaid.utils;
 
-public class BlueprintMaterial {
-    private int typeId;
-    private String name;
-    private int quantity;
-
-    public BlueprintMaterial(int typeId, String name, int quantity) {
-	super();
-	this.typeId = typeId;
-	this.name = name;
-	this.quantity = quantity;
+public class EveFormatter {
+    public static String formatIsk(double value) {
+	return String.format("%,.2f", value);
     }
 
-    public int getTypeId() {
-	return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-	this.typeId = typeId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getQuantity() {
-	return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-	this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-	return "BlueprintMaterial [typeId=" + typeId + ", name=" + name + ", quantity=" + quantity + "]";
+    public static String formatIskWithoutDecimals(double value) {
+	return String.format("%,.0f", value);
     }
 }

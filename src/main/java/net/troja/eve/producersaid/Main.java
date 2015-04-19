@@ -19,28 +19,34 @@
  *******************************************************************************/
 package net.troja.eve.producersaid;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-
+import java.util.List;
 import java.util.Map;
 
+import net.troja.eve.producersaid.data.Blueprint;
+import net.troja.eve.producersaid.data.BlueprintProduction;
 import net.troja.eve.producersaid.data.InvType;
 
-import org.junit.Test;
-
-public class InvTypesReaderTest {
-    @Test
-    public void testRead() {
-	InvTypesReader reader = new InvTypesReader();
-	reader.setDataFile("testInvTypes.csv");
-	reader.setTechFile("testDgmTypeAttributes.csv");
-	Map<Integer, InvType> invTypes = reader.getInvTypes();
-	assertNotNull(invTypes);
-	assertTrue(invTypes.size() > 0);
-	InvType trit = invTypes.get(34);
-	assertThat(trit.getVolume(), is(0.01d));
-	assertThat(trit.getTechLevel(), is(4));
+public class Main {
+    
+    public Main() {
+	EveCentral eveCentral = new EveCentral();
+	InvTypesReader invTypesReader = new InvTypesReader();
+	Map<Integer, InvType> invTypes = invTypesReader.getInvTypes();
+	ProductionCalculator prodCalc = new ProductionCalculator(eveCentral);
+	MaterialResearchCalculator matsCalculator = new MaterialResearchCalculator();
+	BlueprintsReader reader = new BlueprintsReader(invTypes);
+	List<Blueprint> blueprints = reader.getBlueprints();
+	for(int count = 0; count < 50; count++) {
+	    Blueprint blueprint = blueprints.get(count);
+	    BlueprintProduction prod = prodCalc.calc(blueprint);
+	    System.out.println(prod.toString());
+	    prod = prodCalc.calc(matsCalculator.optimize(blueprint));
+	    System.out.println(prod.toString());
+	    
+	}
+    }
+    
+    public static void main(String[] args) {
+	new Main();
     }
 }

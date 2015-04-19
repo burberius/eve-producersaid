@@ -41,6 +41,7 @@ public class ProductionCalculator {
 	production.setProductPrice(calcProductPrice(blueprint));
 	production.setMaterialPriceBuy(calcMaterialPriceBuy(blueprint));
 	production.setMaterialPriceSell(calcMaterialPriceSell(blueprint));
+	production.setBlueprint(blueprint);
 	return production;
     }
 

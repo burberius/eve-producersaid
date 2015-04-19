@@ -21,11 +21,13 @@ package net.troja.eve.producersaid.data;
 
 public class BlueprintSkill {
     private int typeId;
+    private String name;
     private int level;
 
-    public BlueprintSkill(int typeId, int level) {
+    public BlueprintSkill(int typeId, String name, int level) {
 	super();
 	this.typeId = typeId;
+	this.name = name;
 	this.level = level;
     }
 
@@ -35,6 +37,14 @@ public class BlueprintSkill {
 
     public void setTypeId(int typeId) {
 	this.typeId = typeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getLevel() {
@@ -47,6 +57,6 @@ public class BlueprintSkill {
 
     @Override
     public String toString() {
-	return "ProductSkill [typeId=" + typeId + ", level=" + level + "]";
+	return "BlueprintSkill [typeId=" + typeId + ", name=" + name + ", level=" + level + "]";
     }
 }

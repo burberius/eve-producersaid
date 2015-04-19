@@ -25,8 +25,9 @@ public class InvType {
     private String description;
     private int groupId;
     private int marketGroupId;
-    private int mass;
+    private double mass;
     private double volume;
+    private int techLevel;
 
     public int getId() {
 	return id;
@@ -68,12 +69,12 @@ public class InvType {
         this.marketGroupId = marketGroupId;
     }
 
-    public int getMass() {
+    public double getMass() {
         return mass;
     }
 
-    public void setMass(int mass) {
-        this.mass = mass;
+    public void setMass(double d) {
+        this.mass = d;
     }
 
     public double getVolume() {
@@ -84,9 +85,17 @@ public class InvType {
         this.volume = volume;
     }
 
+    public int getTechLevel() {
+        return techLevel;
+    }
+
+    public void setTechLevel(int techLevel) {
+        this.techLevel = techLevel;
+    }
+
     @Override
     public String toString() {
 	return "InvType [id=" + id + ", name=" + name + ", description=" + description + ", groupId=" + groupId + ", marketGroupId=" + marketGroupId
-		+ ", mass=" + mass + ", volume=" + volume + "]";
+		+ ", mass=" + mass + ", volume=" + volume + ", techLevel=" + techLevel + "]";
     }
 }

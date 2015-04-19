@@ -24,19 +24,37 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Map;
 
 import net.troja.eve.producersaid.data.Blueprint;
 import net.troja.eve.producersaid.data.BlueprintActivity;
+import net.troja.eve.producersaid.data.InvType;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class BlueprintsReaderTest {
+    @Mock
+    private Map<Integer, InvType> invTypes;
+    
+    @Before
+    public void setup() {
+	MockitoAnnotations.initMocks(this);
+    }
+    
     @Test
     public void testReadOfBlueprints() {
-	BlueprintsReader reader = new BlueprintsReader();
+	BlueprintsReader reader = new BlueprintsReader(invTypes);
 	reader.setBlueprintsFile("testBlueprints.yaml");
+	when(invTypes.containsKey(any(Integer.class))).thenReturn(true);
+	when(invTypes.get(any(Integer.class))).thenReturn(new InvType());
+	
 	List<Blueprint> blueprints = reader.getBlueprints();
 	assertThat(blueprints, not(is(nullValue())));
 	assertThat(blueprints.size(), is(equalTo(1)));

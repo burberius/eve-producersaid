@@ -21,22 +21,23 @@ package net.troja.eve.producersaid.data;
 
 public class BlueprintProduct extends BlueprintMaterial {
     private float probability;
-    
-    public BlueprintProduct(int typeId, int quantity, float probability) {
-	super(typeId, quantity);
+
+    public BlueprintProduct(int typeId, String name, int quantity, float probability) {
+	super(typeId, name, quantity);
 	this.probability = probability;
     }
 
     public float getProbability() {
-        return probability;
+	return probability;
     }
 
     public void setProbability(float probability) {
-        this.probability = probability;
+	this.probability = probability;
     }
 
     @Override
     public String toString() {
-	return "BlueprintProduct [probability=" + probability + ", typeId=" + getTypeId() + ", quantity=" + getQuantity() + "]";
+	return "BlueprintProduct [probability=" + probability + ", typeId=" + getTypeId() + ", name=" + getName() + ", quantity=" + getQuantity()
+		+ "]";
     }
 }

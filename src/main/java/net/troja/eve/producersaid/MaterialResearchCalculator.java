@@ -45,7 +45,7 @@ public class MaterialResearchCalculator {
 	for(BlueprintMaterial material : materials) {
 	    int quantity = material.getQuantity();
 	    quantity = (int) Math.ceil((100 - me)/100d * quantity);
-	    materialsResult.add(new BlueprintMaterial(material.getTypeId(), quantity));
+	    materialsResult.add(new BlueprintMaterial(material.getTypeId(), material.getName(), quantity));
 	}
 	return materialsResult;
     }

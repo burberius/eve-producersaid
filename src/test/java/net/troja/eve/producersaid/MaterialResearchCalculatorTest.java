@@ -64,7 +64,7 @@ public class MaterialResearchCalculatorTest {
 	BlueprintActivity manufacturing = new BlueprintActivity();
 	List<BlueprintMaterial> materials = new ArrayList<>();
 	for (int num : quantities) {
-	    materials.add(new BlueprintMaterial(0, num));
+	    materials.add(new BlueprintMaterial(0, "", num));
 	}
 	manufacturing.setMaterials(materials);
 	blueprint.setManufacturing(manufacturing);

@@ -21,7 +21,6 @@ package net.troja.eve.producersaid;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,20 +41,26 @@ public class InvTypesReader {
     private static final String COLUMN_MARKETGROUPID = "MARKETGROUPID";
     private static final String COLUMN_MASS = "MASS";
     private static final String COLUMN_VOLUME = "VOLUME";
-    
+
     private String dataFile = "invTypes.csv";
-    
+    private String techFile = "dgmTypeAttributes.csv";
+    private Map<Integer, InvType> invTypes = null;
+
     public Map<Integer, InvType> getInvTypes() {
-	Map<Integer, InvType> result = new HashMap<Integer, InvType>();
+	if (invTypes == null) {
+	    loadInvTypes();
+	    loadTechInformation();
+	}
+
+	return invTypes;
+    }
+
+    private void loadInvTypes() {
+	invTypes = new HashMap<Integer, InvType>();
 	try {
-	    URL resource = getClass().getResource("/" + dataFile);
-	    if(resource == null) {
-		LOGGER.error("Could not find invTypes data file: " + dataFile);
-		return result;
-	    }
-	    InputStreamReader reader = new InputStreamReader(resource.openStream());
+	    InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/" + dataFile));
 	    for (CSVRecord record : CSVFormat.EXCEL.withHeader().parse(reader)) {
-		if(!"1".equals(record.get(COLUMN_PUBLISHED))) {
+		if (!"1".equals(record.get(COLUMN_PUBLISHED))) {
 		    continue;
 		}
 		InvType invType = new InvType();
@@ -63,24 +68,44 @@ public class InvTypesReader {
 		invType.setName(record.get(COLUMN_NAME));
 		invType.setDescription(record.get(COLUMN_DESCRIPTION));
 		invType.setGroupId(Integer.parseInt(record.get(COLUMN_GROUPID)));
-		invType.setMarketGroupId(Integer.parseInt(record.get(COLUMN_MARKETGROUPID)));
-		invType.setMass(Integer.parseInt(record.get(COLUMN_MASS)));
+		String marketGroupId = record.get(COLUMN_MARKETGROUPID);
+		if (marketGroupId != null && marketGroupId.trim().length() > 0) {
+		    invType.setMarketGroupId(Integer.parseInt(marketGroupId));
+		}
+		invType.setMass(Double.parseDouble(record.get(COLUMN_MASS)));
 		try {
 		    invType.setVolume(Double.parseDouble(record.get(COLUMN_VOLUME)));
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 		    LOGGER.error("Wrong number format, the csv is probably not converted with en_US locale!");
 		}
-		result.put(invType.getId(), invType);
+		invTypes.put(invType.getId(), invType);
 	    }
 	    reader.close();
 	} catch (IOException e) {
 	    LOGGER.error("Could not read CSV file of InvTypes", e);
 	}
+    }
 
-	return result;
+    private void loadTechInformation() {
+	try {
+	    InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/" + techFile));
+	    for (CSVRecord record : CSVFormat.EXCEL.withHeader().parse(reader)) {
+		int typeid = Integer.parseInt(record.get("TYPEID"));
+		InvType invType = invTypes.get(typeid);
+		if(invType != null) {
+		    invType.setTechLevel(Integer.parseInt(record.get("TECH")));
+		}
+	    }
+	} catch (IOException e) {
+	    LOGGER.error("Could not read CSV file of InvTypes", e);
+	}
     }
 
     public void setDataFile(String dataFile) {
-        this.dataFile = dataFile;
+	this.dataFile = dataFile;
+    }
+
+    public void setTechFile(String techFile) {
+	this.techFile = techFile;
     }
 }
