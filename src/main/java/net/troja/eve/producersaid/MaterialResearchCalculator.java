@@ -28,23 +28,24 @@ import net.troja.eve.producersaid.data.BlueprintMaterial;
 public class MaterialResearchCalculator {
     public Blueprint optimize(Blueprint blueprint) {
 	List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
+
 	List<BlueprintMaterial> perfect = calculateEfficiency(materials, 10);
 	blueprint.getManufacturing().setMaterials(perfect);
-	for(int count = 9; count > 0; count--) {
+	for (int count = 9; count > 0; count--) {
 	    List<BlueprintMaterial> work = calculateEfficiency(materials, count);
-	    if(!work.toString().equals(perfect.toString())) {
+	    if (!work.toString().equals(perfect.toString())) {
 		blueprint.setMaterialEfficiency(count + 1);
 		break;
 	    }
 	}
 	return blueprint;
     }
-    
+
     private List<BlueprintMaterial> calculateEfficiency(List<BlueprintMaterial> materials, int me) {
 	List<BlueprintMaterial> materialsResult = new ArrayList<BlueprintMaterial>();
-	for(BlueprintMaterial material : materials) {
+	for (BlueprintMaterial material : materials) {
 	    int quantity = material.getQuantity();
-	    quantity = (int) Math.ceil((100 - me)/100d * quantity);
+	    quantity = (int) Math.ceil((100 - me) / 100d * quantity);
 	    materialsResult.add(new BlueprintMaterial(material.getTypeId(), material.getName(), quantity));
 	}
 	return materialsResult;
