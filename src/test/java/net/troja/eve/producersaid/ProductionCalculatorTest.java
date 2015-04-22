@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.troja.eve.producersaid.data.Blueprint;
 import net.troja.eve.producersaid.data.BlueprintActivity;
@@ -42,6 +43,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class ProductionCalculatorTest {
+    private static final double FACILITY_COST = 0.1d;
     private static final float PRODUCT_PRICE = 1234f;
     private static final int PRODUCT_ID = 178;
     private static final int MATERIAL_ID1 = 34;
@@ -54,6 +56,9 @@ public class ProductionCalculatorTest {
     @Mock
     private EveCentral eveCentral;
     
+    @Mock
+    private Map<Integer, Double> basePrices;
+    
     @Before
     public void setup() {
 	MockitoAnnotations.initMocks(this);
@@ -61,7 +66,7 @@ public class ProductionCalculatorTest {
     
     @Test
     public void testCaculation() {
-	ProductionCalculator calculator = new ProductionCalculator(eveCentral);
+	ProductionCalculator calculator = new ProductionCalculator(eveCentral, basePrices, FACILITY_COST);
 	EveCentralPrice productPrice = new EveCentralPrice();
 	productPrice.setSell5Percent(PRODUCT_PRICE);
 	when(eveCentral.getPrice(PRODUCT_ID)).thenReturn(productPrice);
@@ -75,13 +80,18 @@ public class ProductionCalculatorTest {
 	map.put(MATERIAL_ID1, materialPrice1);
 	map.put(MATERIAL_ID2, materialPrice2);
 	when(eveCentral.getPrices(Arrays.asList(MATERIAL_ID1, MATERIAL_ID2))).thenReturn(map);
+	when(basePrices.get(MATERIAL_ID1)).thenReturn((double) MATERIAL_PRICE_BUY1);
+	when(basePrices.get(MATERIAL_ID2)).thenReturn((double) MATERIAL_PRICE_BUY2);
 	
 	Blueprint blueprint = createBlueprint();
 	BlueprintProduction result = calculator.calc(blueprint);
 	
 	assertThat(result.getProductPrice(), is(equalTo((double)(PRODUCT_PRICE * 100))));
-	assertThat(result.getMaterialPriceBuy(), is(equalTo((double)((MATERIAL_PRICE_BUY1 * 50) + (MATERIAL_PRICE_BUY2 * 25)))));
+	double buyPrice = (double)((MATERIAL_PRICE_BUY1 * 50) + (MATERIAL_PRICE_BUY2 * 25));
+	assertThat(result.getMaterialPriceBuy(), is(equalTo(buyPrice)));
 	assertThat(result.getMaterialPriceSell(), is(equalTo((double)((MATERIAL_PRICE_SELL1 * 50) + (MATERIAL_PRICE_SELL2 * 25)))));
+	double prodPrice = buyPrice * 1.1 * FACILITY_COST;
+	assertThat(result.getProductionCost(), is(equalTo(prodPrice)));
     }
 
     private Blueprint createBlueprint() {

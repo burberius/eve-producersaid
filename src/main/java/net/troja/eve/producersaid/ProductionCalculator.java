@@ -31,9 +31,13 @@ import net.troja.eve.producersaid.data.EveCentralPrice;
 
 public class ProductionCalculator {
     private EveCentral eveCentral;
+    private Map<Integer, Double> basePrices;
+    private double costIndex;
 
-    public ProductionCalculator(EveCentral eveCentral) {
+    public ProductionCalculator(EveCentral eveCentral, Map<Integer, Double> basePrices, double costIndex) {
 	this.eveCentral = eveCentral;
+	this.basePrices = basePrices;
+	this.costIndex = costIndex;
     }
 
     public BlueprintProduction calc(Blueprint blueprint) {
@@ -41,8 +45,23 @@ public class ProductionCalculator {
 	production.setProductPrice(calcProductPrice(blueprint));
 	production.setMaterialPriceBuy(calcMaterialPriceBuy(blueprint));
 	production.setMaterialPriceSell(calcMaterialPriceSell(blueprint));
+	production.setProductionCost(calcProductionCosts(blueprint));
 	production.setBlueprint(blueprint);
 	return production;
+    }
+
+    private double calcProductionCosts(Blueprint blueprint) {
+	double result = 0d;
+	List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
+	for (BlueprintMaterial material : materials) {
+	    Double price = basePrices.get(material.getTypeId());
+	    if(price == null) {
+		return 0d;
+	    }
+	    result += material.getQuantity() * price;
+	}
+	result = result * costIndex * 1.1;
+	return result;
     }
 
     private double calcMaterialPriceBuy(Blueprint blueprint) {

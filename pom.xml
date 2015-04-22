@@ -70,6 +70,11 @@
 			<artifactId>jackson-dataformat-yaml</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>net.troja.eve</groupId>
+			<artifactId>crest</artifactId>
+			<version>0.1.1</version>
+		</dependency>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -89,6 +94,5 @@
 			<version>1.3</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 </project>

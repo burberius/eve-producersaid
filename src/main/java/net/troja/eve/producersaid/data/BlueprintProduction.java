@@ -25,6 +25,7 @@ public class BlueprintProduction {
     private double productPrice;
     private double materialPriceBuy;
     private double materialPriceSell;
+    private double productionCost;
     private Blueprint blueprint;
 
     public void setProductPrice(double productPrice) {
@@ -59,10 +60,17 @@ public class BlueprintProduction {
 	this.blueprint = blueprint;
     }
 
+    public double getProductionCost() {
+        return productionCost;
+    }
+
+    public void setProductionCost(double productionCost) {
+        this.productionCost = productionCost;
+    }
+
     @Override
     public String toString() {
-	return "BlueprintProduction [blueprint=" + blueprint.getName() + ", productPrice=" + EveFormatter.formatIsk(productPrice)
-		+ ", materialPriceBuy=" + EveFormatter.formatIsk(materialPriceBuy) + ", materialPriceSell="
-		+ EveFormatter.formatIsk(materialPriceSell) + ", winBuy=" + EveFormatter.formatIsk(productPrice - materialPriceBuy) + "]";
+	return "BlueprintProduction [productPrice=" + EveFormatter.formatIsk(productPrice) + ", materialPriceBuy=" + EveFormatter.formatIsk(materialPriceBuy) + ", materialPriceSell="
+		+ EveFormatter.formatIsk(materialPriceSell) + ", productionCost=" + EveFormatter.formatIsk(productionCost) + ", blueprint=" + blueprint + "]";
     }
 }
