@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -28,49 +28,50 @@ public class BlueprintProduction {
     private double productionCost;
     private Blueprint blueprint;
 
-    public void setProductPrice(double productPrice) {
-	this.productPrice = productPrice;
+    public void setProductPrice(final double productPrice) {
+        this.productPrice = productPrice;
     }
 
     public double getProductPrice() {
-	return productPrice;
+        return productPrice;
     }
 
     public double getMaterialPriceBuy() {
-	return materialPriceBuy;
+        return materialPriceBuy;
     }
 
-    public void setMaterialPriceBuy(double materialPriceBuy) {
-	this.materialPriceBuy = materialPriceBuy;
+    public void setMaterialPriceBuy(final double materialPriceBuy) {
+        this.materialPriceBuy = materialPriceBuy;
     }
 
     public double getMaterialPriceSell() {
-	return materialPriceSell;
+        return materialPriceSell;
     }
 
-    public void setMaterialPriceSell(double materialPriceSell) {
-	this.materialPriceSell = materialPriceSell;
+    public void setMaterialPriceSell(final double materialPriceSell) {
+        this.materialPriceSell = materialPriceSell;
     }
 
     public Blueprint getBlueprint() {
-	return blueprint;
+        return blueprint;
     }
 
-    public void setBlueprint(Blueprint blueprint) {
-	this.blueprint = blueprint;
+    public void setBlueprint(final Blueprint blueprint) {
+        this.blueprint = blueprint;
     }
 
     public double getProductionCost() {
         return productionCost;
     }
 
-    public void setProductionCost(double productionCost) {
+    public void setProductionCost(final double productionCost) {
         this.productionCost = productionCost;
     }
 
     @Override
     public String toString() {
-	return "BlueprintProduction [productPrice=" + EveFormatter.formatIsk(productPrice) + ", materialPriceBuy=" + EveFormatter.formatIsk(materialPriceBuy) + ", materialPriceSell="
-		+ EveFormatter.formatIsk(materialPriceSell) + ", productionCost=" + EveFormatter.formatIsk(productionCost) + ", blueprint=" + blueprint + "]";
+        return "BlueprintProduction [productPrice=" + EveFormatter.formatIsk(productPrice) + ", materialPriceBuy="
+                + EveFormatter.formatIsk(materialPriceBuy) + ", materialPriceSell=" + EveFormatter.formatIsk(materialPriceSell) + ", productionCost="
+                + EveFormatter.formatIsk(productionCost) + ", blueprint=" + blueprint + "]";
     }
 }

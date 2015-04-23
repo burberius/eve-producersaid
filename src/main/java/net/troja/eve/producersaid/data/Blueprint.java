@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -32,34 +32,34 @@ public class Blueprint {
     private int timeEfficiency = 0;
 
     public int getId() {
-	return id;
+        return id;
     }
 
-    public void setId(int id) {
-	this.id = id;
+    public void setId(final int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public int getMaxProductionLimit() {
-	return maxProductionLimit;
+        return maxProductionLimit;
     }
 
-    public void setMaxProductionLimit(int maxProductionLimit) {
-	this.maxProductionLimit = maxProductionLimit;
+    public void setMaxProductionLimit(final int maxProductionLimit) {
+        this.maxProductionLimit = maxProductionLimit;
     }
 
     public BlueprintActivity getCopying() {
         return copying;
     }
 
-    public void setCopying(BlueprintActivity copying) {
+    public void setCopying(final BlueprintActivity copying) {
         this.copying = copying;
     }
 
@@ -67,7 +67,7 @@ public class Blueprint {
         return invention;
     }
 
-    public void setInvention(BlueprintActivity invention) {
+    public void setInvention(final BlueprintActivity invention) {
         this.invention = invention;
     }
 
@@ -75,7 +75,7 @@ public class Blueprint {
         return manufacturing;
     }
 
-    public void setManufacturing(BlueprintActivity manufacturing) {
+    public void setManufacturing(final BlueprintActivity manufacturing) {
         this.manufacturing = manufacturing;
     }
 
@@ -83,7 +83,7 @@ public class Blueprint {
         return researchMaterial;
     }
 
-    public void setResearchMaterial(BlueprintActivity researchMaterial) {
+    public void setResearchMaterial(final BlueprintActivity researchMaterial) {
         this.researchMaterial = researchMaterial;
     }
 
@@ -91,7 +91,7 @@ public class Blueprint {
         return researchTime;
     }
 
-    public void setResearchTime(BlueprintActivity researchTime) {
+    public void setResearchTime(final BlueprintActivity researchTime) {
         this.researchTime = researchTime;
     }
 
@@ -99,7 +99,7 @@ public class Blueprint {
         return materialEfficiency;
     }
 
-    public void setMaterialEfficiency(int materialEfficiency) {
+    public void setMaterialEfficiency(final int materialEfficiency) {
         this.materialEfficiency = materialEfficiency;
     }
 
@@ -107,14 +107,14 @@ public class Blueprint {
         return timeEfficiency;
     }
 
-    public void setTimeEfficiency(int timeEfficiency) {
+    public void setTimeEfficiency(final int timeEfficiency) {
         this.timeEfficiency = timeEfficiency;
     }
 
     @Override
     public String toString() {
-	return "Blueprint [id=" + id + ", name=" + name + ", maxProductionLimit=" + maxProductionLimit + ", copying=" + copying + ", invention="
-		+ invention + ", manufacturing=" + manufacturing + ", researchMaterial=" + researchMaterial + ", researchTime=" + researchTime
-		+ ", materialEfficiency=" + materialEfficiency + ", timeEfficiency=" + timeEfficiency + "]";
+        return "Blueprint [id=" + id + ", name=" + name + ", maxProductionLimit=" + maxProductionLimit + ", copying=" + copying + ", invention="
+                + invention + ", manufacturing=" + manufacturing + ", researchMaterial=" + researchMaterial + ", researchTime=" + researchTime
+                + ", materialEfficiency=" + materialEfficiency + ", timeEfficiency=" + timeEfficiency + "]";
     }
 }

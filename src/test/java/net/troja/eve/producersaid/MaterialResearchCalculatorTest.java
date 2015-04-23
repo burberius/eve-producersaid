@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -33,48 +33,48 @@ import net.troja.eve.producersaid.data.BlueprintMaterial;
 import org.junit.Test;
 
 public class MaterialResearchCalculatorTest {
-    private MaterialResearchCalculator calculator = new MaterialResearchCalculator();
+    private final MaterialResearchCalculator calculator = new MaterialResearchCalculator();
 
     @Test
     public void testOptimizationME8() {
-	int[] materials = { 7, 16, 14 };
-	int[] optimizedMaterials = { 7, 15, 13 };
-	int me = 8;
-	testOptimization(materials, optimizedMaterials, me);
+        final int[] materials = { 7, 16, 14 };
+        final int[] optimizedMaterials = { 7, 15, 13 };
+        final int me = 8;
+        testOptimization(materials, optimizedMaterials, me);
     }
 
     @Test
     public void testOptimizationME0() {
-	int[] materials = { 1, 3, 3 };
-	int[] optimizedMaterials = { 1, 3, 3 };
-	int me = 0;
-	testOptimization(materials, optimizedMaterials, me);
+        final int[] materials = { 1, 3, 3 };
+        final int[] optimizedMaterials = { 1, 3, 3 };
+        final int me = 0;
+        testOptimization(materials, optimizedMaterials, me);
     }
 
     @Test
     public void testOptimizationME10() {
-	int[] materials = { 167, 389, 361 };
-	int[] optimizedMaterials = { 151, 351, 325 };
-	int me = 10;
-	testOptimization(materials, optimizedMaterials, me);
+        final int[] materials = { 167, 389, 361 };
+        final int[] optimizedMaterials = { 151, 351, 325 };
+        final int me = 10;
+        testOptimization(materials, optimizedMaterials, me);
     }
 
-    private void testOptimization(int[] quantities, int[] optimizedQuantities, int me) {
-	Blueprint blueprint = new Blueprint();
-	BlueprintActivity manufacturing = new BlueprintActivity();
-	List<BlueprintMaterial> materials = new ArrayList<>();
-	for (int num : quantities) {
-	    materials.add(new BlueprintMaterial(0, "", num));
-	}
-	manufacturing.setMaterials(materials);
-	blueprint.setManufacturing(manufacturing);
+    private void testOptimization(final int[] quantities, final int[] optimizedQuantities, final int me) {
+        final Blueprint blueprint = new Blueprint();
+        final BlueprintActivity manufacturing = new BlueprintActivity();
+        final List<BlueprintMaterial> materials = new ArrayList<>();
+        for (final int num : quantities) {
+            materials.add(new BlueprintMaterial(0, "", num));
+        }
+        manufacturing.setMaterials(materials);
+        blueprint.setManufacturing(manufacturing);
 
-	Blueprint optimized = calculator.optimize(blueprint);
-	assertThat(optimized.getMaterialEfficiency(), is(equalTo(me)));
-	List<BlueprintMaterial> optimizedMaterials = optimized.getManufacturing().getMaterials();
-	assertThat(optimizedMaterials.size(), is(equalTo(optimizedQuantities.length)));
-	for (int pos = 0; pos < optimizedMaterials.size(); pos++) {
-	    assertThat(optimizedMaterials.get(pos).getQuantity(), is(equalTo(optimizedQuantities[pos])));
-	}
+        final Blueprint optimized = calculator.optimize(blueprint);
+        assertThat(optimized.getMaterialEfficiency(), is(equalTo(me)));
+        final List<BlueprintMaterial> optimizedMaterials = optimized.getManufacturing().getMaterials();
+        assertThat(optimizedMaterials.size(), is(equalTo(optimizedQuantities.length)));
+        for (int pos = 0; pos < optimizedMaterials.size(); pos++) {
+            assertThat(optimizedMaterials.get(pos).getQuantity(), is(equalTo(optimizedQuantities[pos])));
+        }
     }
 }

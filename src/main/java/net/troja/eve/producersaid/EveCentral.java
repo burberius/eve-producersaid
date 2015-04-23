@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -57,135 +57,135 @@ public class EveCentral {
     private static final String NODE_5PERCENT = "fivePercent";
     private static final String NODE_VOLUME = "volume";
     private static final String NODE_GENERATED = "generated";
-    private static final String NODE_TYPES= "types";
+    private static final String NODE_TYPES = "types";
 
     private final HashMap<Integer, EveCentralPrice> priceCache;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private String fileName = null;
 
     public EveCentral() {
-	priceCache = new HashMap<>();
+        priceCache = new HashMap<>();
     }
 
-
-    public EveCentralPrice getPrice(int typeId) {
-	if(!priceCache.containsKey(typeId)) {
-	    downloadPrices(Arrays.asList(typeId));
-	}
-	return priceCache.get(typeId);
+    public EveCentralPrice getPrice(final int typeId) {
+        if (!priceCache.containsKey(typeId)) {
+            downloadPrices(Arrays.asList(typeId));
+        }
+        return priceCache.get(typeId);
     }
-    
+
     public Map<Integer, EveCentralPrice> getPrices(final List<Integer> typeIds) {
-	final Map<Integer, EveCentralPrice> queryPrices = queryPrices(typeIds);
-	if (queryPrices.size() < typeIds.size()) {
-	    final List<Integer> downloadIds = new ArrayList<Integer>();
-	    for (final Integer id : typeIds) {
-		if (!queryPrices.containsKey(id)) {
-		    downloadIds.add(id);
-		}
-	    }
-	    queryPrices.putAll(downloadPrices(downloadIds));
-	}
-	return queryPrices;
+        final Map<Integer, EveCentralPrice> queryPrices = queryPrices(typeIds);
+        if (queryPrices.size() < typeIds.size()) {
+            final List<Integer> downloadIds = new ArrayList<Integer>();
+            for (final Integer id : typeIds) {
+                if (!queryPrices.containsKey(id)) {
+                    downloadIds.add(id);
+                }
+            }
+            queryPrices.putAll(downloadPrices(downloadIds));
+        }
+        return queryPrices;
     }
 
     private Map<Integer, EveCentralPrice> queryPrices(final List<Integer> typeIds) {
-	final Map<Integer, EveCentralPrice> allPresent = new HashMap<Integer, EveCentralPrice>();
-	final List<Integer> downloadIds = new ArrayList<>();
-	for (int id : typeIds) {
-	    EveCentralPrice price = priceCache.get(id);
-	    if (price == null) {
-		downloadIds.add(id);
-		continue;
-	    }
-	    if (price.getTime() < System.currentTimeMillis() - CACHE_TIME) {
-		downloadIds.add(id);
-		continue;
-	    }
-	    allPresent.put(id, price);
-	}
-	if (downloadIds.size() > 0) {
-	    allPresent.putAll(downloadPrices(downloadIds));
-	}
-	return allPresent;
+        final Map<Integer, EveCentralPrice> allPresent = new HashMap<Integer, EveCentralPrice>();
+        final List<Integer> downloadIds = new ArrayList<>();
+        for (final int id : typeIds) {
+            final EveCentralPrice price = priceCache.get(id);
+            if (price == null) {
+                downloadIds.add(id);
+                continue;
+            }
+            if (price.getTime() < (System.currentTimeMillis() - CACHE_TIME)) {
+                downloadIds.add(id);
+                continue;
+            }
+            allPresent.put(id, price);
+        }
+        if (downloadIds.size() > 0) {
+            allPresent.putAll(downloadPrices(downloadIds));
+        }
+        return allPresent;
     }
 
     private Map<Integer, EveCentralPrice> downloadPrices(final List<Integer> typeIds) {
-	final String urlString = getUrl(typeIds);
-	Map<Integer, EveCentralPrice> prices = null;
-	try {
-	    prices = parsePrices(getData(urlString));
-	} catch (final IOException e) {
-	    LOGGER.error("Could not download eve central prices: " + e.getMessage(), e);
-	    return null;
-	}
-	priceCache.putAll(prices);
-	LOGGER.info("Downloaded " + prices.size() + " prices from Eve Central");
-	return prices;
+        final String urlString = getUrl(typeIds);
+        Map<Integer, EveCentralPrice> prices = null;
+        try {
+            prices = parsePrices(getData(urlString));
+        } catch (final IOException e) {
+            LOGGER.error("Could not download eve central prices: " + e.getMessage(), e);
+            return null;
+        }
+        priceCache.putAll(prices);
+        LOGGER.info("Downloaded " + prices.size() + " prices from Eve Central");
+        return prices;
     }
 
     private String getData(final String url) throws IOException {
-	if (fileName == null) {
-	    final CloseableHttpClient httpclient = HttpClients.createDefault();
-	    try {
-		final HttpGet request = new HttpGet(url);
-		request.setHeader("User-Agent", USER_AGENT);
-		final HttpResponse response = httpclient.execute(request);
-		final int status = response.getStatusLine().getStatusCode();
-		if ((status >= 200) && (status < 300)) {
-		    final HttpEntity entity = response.getEntity();
-		    return entity != null ? EntityUtils.toString(entity) : null;
-		} else {
-		    throw new IOException("Download error: " + status + " " + response.getStatusLine().getReasonPhrase());
-		}
-	    } finally {
-		httpclient.close();
-	    }
-	} else
-	    return new String(Files.readAllBytes(Paths.get(fileName)));
+        if (fileName == null) {
+            final CloseableHttpClient httpclient = HttpClients.createDefault();
+            try {
+                final HttpGet request = new HttpGet(url);
+                request.setHeader("User-Agent", USER_AGENT);
+                final HttpResponse response = httpclient.execute(request);
+                final int status = response.getStatusLine().getStatusCode();
+                if ((status >= 200) && (status < 300)) {
+                    final HttpEntity entity = response.getEntity();
+                    return entity != null ? EntityUtils.toString(entity) : null;
+                } else {
+                    throw new IOException("Download error: " + status + " " + response.getStatusLine().getReasonPhrase());
+                }
+            } finally {
+                httpclient.close();
+            }
+        } else {
+            return new String(Files.readAllBytes(Paths.get(fileName)));
+        }
     }
 
     private Map<Integer, EveCentralPrice> parsePrices(final String content) {
-	Map<Integer, EveCentralPrice> map = new HashMap<>();
-	try {
-	    JsonNode node = objectMapper.readTree(content);
-	    Iterator<JsonNode> iter = node.elements();
-	    while (iter.hasNext()) {
-		EveCentralPrice price = convertToObject(iter.next());
-		map.put(price.getTypeId(), price);
-	    }
+        final Map<Integer, EveCentralPrice> map = new HashMap<>();
+        try {
+            final JsonNode node = objectMapper.readTree(content);
+            final Iterator<JsonNode> iter = node.elements();
+            while (iter.hasNext()) {
+                final EveCentralPrice price = convertToObject(iter.next());
+                map.put(price.getTypeId(), price);
+            }
 
-	} catch (IOException e) {
-	    LOGGER.error("Could not parse data", e);
-	}
-	return map;
+        } catch (final IOException e) {
+            LOGGER.error("Could not parse data", e);
+        }
+        return map;
     }
 
-    private EveCentralPrice convertToObject(JsonNode node) {
-	EveCentralPrice price = new EveCentralPrice();
-	JsonNode buy = node.path(NODE_BUY);
-	price.setTypeId(buy.path(NODE_FORQUERY).path(NODE_TYPES).get(0).asInt());
-	price.setTime(buy.path(NODE_GENERATED).asLong());
-	price.setBuyMax((float) buy.path(NODE_MAX).asDouble());
-	price.setBuy5Percent((float) buy.path(NODE_5PERCENT).asDouble());
-	price.setBuyVolume(buy.path(NODE_VOLUME).asLong());
-	JsonNode sell = node.path(NODE_SELL);
-	price.setSellMin((float) sell.path(NODE_MIN).asDouble());
-	price.setSell5Percent((float) sell.path(NODE_5PERCENT).asDouble());
-	price.setSellVolume(sell.path(NODE_VOLUME).asLong());
-	return price;
+    private EveCentralPrice convertToObject(final JsonNode node) {
+        final EveCentralPrice price = new EveCentralPrice();
+        final JsonNode buy = node.path(NODE_BUY);
+        price.setTypeId(buy.path(NODE_FORQUERY).path(NODE_TYPES).get(0).asInt());
+        price.setTime(buy.path(NODE_GENERATED).asLong());
+        price.setBuyMax((float) buy.path(NODE_MAX).asDouble());
+        price.setBuy5Percent((float) buy.path(NODE_5PERCENT).asDouble());
+        price.setBuyVolume(buy.path(NODE_VOLUME).asLong());
+        final JsonNode sell = node.path(NODE_SELL);
+        price.setSellMin((float) sell.path(NODE_MIN).asDouble());
+        price.setSell5Percent((float) sell.path(NODE_5PERCENT).asDouble());
+        price.setSellVolume(sell.path(NODE_VOLUME).asLong());
+        return price;
     }
 
     private String getUrl(final List<Integer> typeIds) {
-	final StringBuilder url = new StringBuilder(BASE_URL);
-	for (final Integer value : typeIds) {
-	    url.append(URL_TYPE).append(value);
-	}
-	return url.toString();
+        final StringBuilder url = new StringBuilder(BASE_URL);
+        for (final Integer value : typeIds) {
+            url.append(URL_TYPE).append(value);
+        }
+        return url.toString();
     }
 
-    public void setFilename(String name) {
-	fileName = name;
+    public void setFilename(final String name) {
+        fileName = name;
     }
 
 }

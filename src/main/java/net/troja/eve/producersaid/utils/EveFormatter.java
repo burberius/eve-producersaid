@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -20,11 +20,11 @@
 package net.troja.eve.producersaid.utils;
 
 public class EveFormatter {
-    public static String formatIsk(double value) {
-	return String.format("%,.2f", value);
+    public static String formatIsk(final double value) {
+        return String.format("%,.2f", value);
     }
 
-    public static String formatIskWithoutDecimals(double value) {
-	return String.format("%,.0f", value);
+    public static String formatIskWithoutDecimals(final double value) {
+        return String.format("%,.0f", value);
     }
 }

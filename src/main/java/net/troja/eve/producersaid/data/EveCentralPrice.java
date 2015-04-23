@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -30,82 +30,82 @@ public class EveCentralPrice {
     private long sellVolume;
 
     public EveCentralPrice() {
-	super();
+        super();
     }
 
-    public EveCentralPrice(int typeId, long time) {
-	super();
-	this.typeId = typeId;
-	this.time = time;
+    public EveCentralPrice(final int typeId, final long time) {
+        super();
+        this.typeId = typeId;
+        this.time = time;
     }
 
     public int getTypeId() {
-	return typeId;
+        return typeId;
     }
 
-    public void setTypeId(int typeId) {
-	this.typeId = typeId;
+    public void setTypeId(final int typeId) {
+        this.typeId = typeId;
     }
 
     public long getTime() {
-	return time;
+        return time;
     }
 
-    public void setTime(long time) {
-	this.time = time;
+    public void setTime(final long time) {
+        this.time = time;
     }
 
     public float getBuyMax() {
-	return buyMax;
+        return buyMax;
     }
 
-    public void setBuyMax(float buyMax) {
-	this.buyMax = buyMax;
+    public void setBuyMax(final float buyMax) {
+        this.buyMax = buyMax;
     }
 
     public long getBuyVolume() {
-	return buyVolume;
+        return buyVolume;
     }
 
-    public void setBuyVolume(long buyVolume) {
-	this.buyVolume = buyVolume;
+    public void setBuyVolume(final long buyVolume) {
+        this.buyVolume = buyVolume;
     }
 
     public long getSellVolume() {
-	return sellVolume;
+        return sellVolume;
     }
 
-    public void setSellVolume(long sellVolume) {
-	this.sellVolume = sellVolume;
+    public void setSellVolume(final long sellVolume) {
+        this.sellVolume = sellVolume;
     }
 
     public float getBuy5Percent() {
-	return buy5Percent;
+        return buy5Percent;
     }
 
-    public void setBuy5Percent(float buyPercentile) {
-	this.buy5Percent = buyPercentile;
+    public void setBuy5Percent(final float buyPercentile) {
+        buy5Percent = buyPercentile;
     }
 
     public float getSellMin() {
-	return sellMin;
+        return sellMin;
     }
 
-    public void setSellMin(float sellMin) {
-	this.sellMin = sellMin;
+    public void setSellMin(final float sellMin) {
+        this.sellMin = sellMin;
     }
 
     public float getSell5Percent() {
-	return sell5Percent;
+        return sell5Percent;
     }
 
-    public void setSell5Percent(float sellPercentile) {
-	this.sell5Percent = sellPercentile;
+    public void setSell5Percent(final float sellPercentile) {
+        sell5Percent = sellPercentile;
     }
 
     @Override
     public String toString() {
-	return "EveCentralPrice [typeId=" + typeId + ", time=" + time + ", buyMax=" + buyMax + ", buy5Percent=" + buy5Percent + ", buyVolume="
-		+ buyVolume + ", sellMin=" + sellMin + ", sell5Percent=" + sell5Percent + ", sellVolume=" + sellVolume + "]";
+        return "EveCentralPrice [typeId=" + typeId + ", time=" + time + ", buyMax=" + buyMax + ", buy5Percent=" + buy5Percent + ", buyVolume="
+                + buyVolume + ", sellMin=" + sellMin + ", sell5Percent=" + sell5Percent + ", sellVolume=" + sellVolume + "]";
     }
 }

@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -24,39 +24,39 @@ public class BlueprintMaterial {
     private String name;
     private int quantity;
 
-    public BlueprintMaterial(int typeId, String name, int quantity) {
-	super();
-	this.typeId = typeId;
-	this.name = name;
-	this.quantity = quantity;
+    public BlueprintMaterial(final int typeId, final String name, final int quantity) {
+        super();
+        this.typeId = typeId;
+        this.name = name;
+        this.quantity = quantity;
     }
 
     public int getTypeId() {
-	return typeId;
+        return typeId;
     }
 
-    public void setTypeId(int typeId) {
-	this.typeId = typeId;
+    public void setTypeId(final int typeId) {
+        this.typeId = typeId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public int getQuantity() {
-	return quantity;
+        return quantity;
     }
 
-    public void setQuantity(int quantity) {
-	this.quantity = quantity;
+    public void setQuantity(final int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
     public String toString() {
-	return "BlueprintMaterial [typeId=" + typeId + ", name=" + name + ", quantity=" + quantity + "]";
+        return "BlueprintMaterial [typeId=" + typeId + ", name=" + name + ", quantity=" + quantity + "]";
     }
 }

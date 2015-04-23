@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -30,26 +30,26 @@ public class InvType {
     private int techLevel;
 
     public int getId() {
-	return id;
+        return id;
     }
 
-    public void setId(int id) {
-	this.id = id;
+    public void setId(final int id) {
+        this.id = id;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
-    public void setName(String name) {
-	this.name = name;
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -57,7 +57,7 @@ public class InvType {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(final int groupId) {
         this.groupId = groupId;
     }
 
@@ -65,7 +65,7 @@ public class InvType {
         return marketGroupId;
     }
 
-    public void setMarketGroupId(int marketGroupId) {
+    public void setMarketGroupId(final int marketGroupId) {
         this.marketGroupId = marketGroupId;
     }
 
@@ -73,15 +73,15 @@ public class InvType {
         return mass;
     }
 
-    public void setMass(double d) {
-        this.mass = d;
+    public void setMass(final double d) {
+        mass = d;
     }
 
     public double getVolume() {
         return volume;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(final double volume) {
         this.volume = volume;
     }
 
@@ -89,13 +89,13 @@ public class InvType {
         return techLevel;
     }
 
-    public void setTechLevel(int techLevel) {
+    public void setTechLevel(final int techLevel) {
         this.techLevel = techLevel;
     }
 
     @Override
     public String toString() {
-	return "InvType [id=" + id + ", name=" + name + ", description=" + description + ", groupId=" + groupId + ", marketGroupId=" + marketGroupId
-		+ ", mass=" + mass + ", volume=" + volume + ", techLevel=" + techLevel + "]";
+        return "InvType [id=" + id + ", name=" + name + ", description=" + description + ", groupId=" + groupId + ", marketGroupId=" + marketGroupId
+                + ", mass=" + mass + ", volume=" + volume + ", techLevel=" + techLevel + "]";
     }
 }

@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -30,87 +30,88 @@ import net.troja.eve.producersaid.data.BlueprintProduction;
 import net.troja.eve.producersaid.data.EveCentralPrice;
 
 public class ProductionCalculator {
-    private EveCentral eveCentral;
-    private Map<Integer, Double> basePrices;
-    private double costIndex;
+    private final EveCentral eveCentral;
+    private final Map<Integer, Double> basePrices;
+    private final double costIndex;
 
-    public ProductionCalculator(EveCentral eveCentral, Map<Integer, Double> basePrices, double costIndex) {
-	this.eveCentral = eveCentral;
-	this.basePrices = basePrices;
-	this.costIndex = costIndex;
+    public ProductionCalculator(final EveCentral eveCentral, final Map<Integer, Double> basePrices, final double costIndex) {
+        this.eveCentral = eveCentral;
+        this.basePrices = basePrices;
+        this.costIndex = costIndex;
     }
 
-    public BlueprintProduction calc(Blueprint blueprint) {
-	BlueprintProduction production = new BlueprintProduction();
-	production.setProductPrice(calcProductPrice(blueprint));
-	production.setMaterialPriceBuy(calcMaterialPriceBuy(blueprint));
-	production.setMaterialPriceSell(calcMaterialPriceSell(blueprint));
-	production.setProductionCost(calcProductionCosts(blueprint));
-	production.setBlueprint(blueprint);
-	return production;
+    public BlueprintProduction calc(final Blueprint blueprint) {
+        final BlueprintProduction production = new BlueprintProduction();
+        production.setProductPrice(calcProductPrice(blueprint));
+        production.setMaterialPriceBuy(calcMaterialPriceBuy(blueprint));
+        production.setMaterialPriceSell(calcMaterialPriceSell(blueprint));
+        production.setProductionCost(calcProductionCosts(blueprint));
+        production.setBlueprint(blueprint);
+        return production;
     }
 
-    private double calcProductionCosts(Blueprint blueprint) {
-	double result = 0d;
-	List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
-	for (BlueprintMaterial material : materials) {
-	    Double price = basePrices.get(material.getTypeId());
-	    if(price == null) {
-		return 0d;
-	    }
-	    result += material.getQuantity() * price;
-	}
-	result = result * costIndex * 1.1;
-	return result;
+    private double calcProductionCosts(final Blueprint blueprint) {
+        double result = 0d;
+        final List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
+        for (final BlueprintMaterial material : materials) {
+            final Double price = basePrices.get(material.getTypeId());
+            if (price == null) {
+                return 0d;
+            }
+            result += material.getQuantity() * price;
+        }
+        result = result * costIndex * 1.1;
+        return result;
     }
 
-    private double calcMaterialPriceBuy(Blueprint blueprint) {
-	double result = 0d;
-	List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
-	List<Integer> typeIds = new ArrayList<>();
-	for (BlueprintMaterial material : materials) {
-	    typeIds.add(material.getTypeId());
-	}
-	Map<Integer, EveCentralPrice> prices = eveCentral.getPrices(typeIds);
-	for (BlueprintMaterial material : materials) {
-	    EveCentralPrice price = prices.get(material.getTypeId());
-	    if (price == null || price.getBuy5Percent() == 0) {
-		return 0d;
-	    }
-	    result += price.getBuy5Percent() * material.getQuantity();
-	}
-	return result;
-    }
-    
-    private double calcMaterialPriceSell(Blueprint blueprint) {
-	double result = 0d;
-	List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
-	List<Integer> typeIds = new ArrayList<>();
-	for (BlueprintMaterial material : materials) {
-	    typeIds.add(material.getTypeId());
-	}
-	Map<Integer, EveCentralPrice> prices = eveCentral.getPrices(typeIds);
-	for (BlueprintMaterial material : materials) {
-	    EveCentralPrice price = prices.get(material.getTypeId());
-	    if (price == null || price.getSell5Percent() == 0) {
-		return 0d;
-	    }
-	    result += price.getSell5Percent() * material.getQuantity();
-	}
-	return result;
+    private double calcMaterialPriceBuy(final Blueprint blueprint) {
+        double result = 0d;
+        final List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
+        final List<Integer> typeIds = new ArrayList<>();
+        for (final BlueprintMaterial material : materials) {
+            typeIds.add(material.getTypeId());
+        }
+        final Map<Integer, EveCentralPrice> prices = eveCentral.getPrices(typeIds);
+        for (final BlueprintMaterial material : materials) {
+            final EveCentralPrice price = prices.get(material.getTypeId());
+            if ((price == null) || (price.getBuy5Percent() == 0)) {
+                return 0d;
+            }
+            result += price.getBuy5Percent() * material.getQuantity();
+        }
+        return result;
     }
 
-    private double calcProductPrice(Blueprint blueprint) {
-	double result = 0d;
-	List<BlueprintProduct> products = blueprint.getManufacturing().getProducts();
-	for (BlueprintProduct product : products) {
-	    EveCentralPrice price = eveCentral.getPrice(product.getTypeId());
-	    if (price != null) {
-		double currentPrice = price.getSell5Percent() * product.getQuantity();
-		if (currentPrice > result)
-		    result = currentPrice;
-	    }
-	}
-	return result;
+    private double calcMaterialPriceSell(final Blueprint blueprint) {
+        double result = 0d;
+        final List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
+        final List<Integer> typeIds = new ArrayList<>();
+        for (final BlueprintMaterial material : materials) {
+            typeIds.add(material.getTypeId());
+        }
+        final Map<Integer, EveCentralPrice> prices = eveCentral.getPrices(typeIds);
+        for (final BlueprintMaterial material : materials) {
+            final EveCentralPrice price = prices.get(material.getTypeId());
+            if ((price == null) || (price.getSell5Percent() == 0)) {
+                return 0d;
+            }
+            result += price.getSell5Percent() * material.getQuantity();
+        }
+        return result;
+    }
+
+    private double calcProductPrice(final Blueprint blueprint) {
+        double result = 0d;
+        final List<BlueprintProduct> products = blueprint.getManufacturing().getProducts();
+        for (final BlueprintProduct product : products) {
+            final EveCentralPrice price = eveCentral.getPrice(product.getTypeId());
+            if (price != null) {
+                final double currentPrice = price.getSell5Percent() * product.getQuantity();
+                if (currentPrice > result) {
+                    result = currentPrice;
+                }
+            }
+        }
+        return result;
     }
 }

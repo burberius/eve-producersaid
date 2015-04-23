@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -42,30 +42,30 @@ import org.mockito.MockitoAnnotations;
 public class BlueprintsReaderTest {
     @Mock
     private Map<Integer, InvType> invTypes;
-    
+
     @Before
     public void setup() {
-	MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
-    
+
     @Test
     public void testReadOfBlueprints() {
-	BlueprintsReader reader = new BlueprintsReader(invTypes);
-	reader.setBlueprintsFile("testBlueprints.yaml");
-	when(invTypes.containsKey(any(Integer.class))).thenReturn(true);
-	when(invTypes.get(any(Integer.class))).thenReturn(new InvType());
-	
-	List<Blueprint> blueprints = reader.getBlueprints();
-	assertThat(blueprints, not(is(nullValue())));
-	assertThat(blueprints.size(), is(equalTo(1)));
-	Blueprint blueprint = blueprints.get(0);
-	assertThat(blueprint.getId(), is(equalTo(688)));
+        final BlueprintsReader reader = new BlueprintsReader(invTypes);
+        reader.setBlueprintsFile("testBlueprints.yaml");
+        when(invTypes.containsKey(any(Integer.class))).thenReturn(true);
+        when(invTypes.get(any(Integer.class))).thenReturn(new InvType());
 
-	BlueprintActivity manufacturing = blueprint.getManufacturing();
-	assertThat(manufacturing.getTime(), is(equalTo(18000)));
-	assertThat(manufacturing.getMaterials().size(), is(equalTo(7)));
-	assertThat(manufacturing.getProducts().size(), is(equalTo(1)));
-	assertThat(manufacturing.getProducts().get(0).getTypeId(), is(equalTo(638)));
-	assertThat(manufacturing.getSkills().size(), is(equalTo(1)));
+        final List<Blueprint> blueprints = reader.getBlueprints();
+        assertThat(blueprints, not(is(nullValue())));
+        assertThat(blueprints.size(), is(equalTo(1)));
+        final Blueprint blueprint = blueprints.get(0);
+        assertThat(blueprint.getId(), is(equalTo(688)));
+
+        final BlueprintActivity manufacturing = blueprint.getManufacturing();
+        assertThat(manufacturing.getTime(), is(equalTo(18000)));
+        assertThat(manufacturing.getMaterials().size(), is(equalTo(7)));
+        assertThat(manufacturing.getProducts().size(), is(equalTo(1)));
+        assertThat(manufacturing.getProducts().get(0).getTypeId(), is(equalTo(638)));
+        assertThat(manufacturing.getSkills().size(), is(equalTo(1)));
     }
 }

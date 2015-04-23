@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -22,22 +22,22 @@ package net.troja.eve.producersaid.data;
 public class BlueprintProduct extends BlueprintMaterial {
     private float probability;
 
-    public BlueprintProduct(int typeId, String name, int quantity, float probability) {
-	super(typeId, name, quantity);
-	this.probability = probability;
+    public BlueprintProduct(final int typeId, final String name, final int quantity, final float probability) {
+        super(typeId, name, quantity);
+        this.probability = probability;
     }
 
     public float getProbability() {
-	return probability;
+        return probability;
     }
 
-    public void setProbability(float probability) {
-	this.probability = probability;
+    public void setProbability(final float probability) {
+        this.probability = probability;
     }
 
     @Override
     public String toString() {
-	return "BlueprintProduct [probability=" + probability + ", typeId=" + getTypeId() + ", name=" + getName() + ", quantity=" + getQuantity()
-		+ "]";
+        return "BlueprintProduct [probability=" + probability + ", typeId=" + getTypeId() + ", name=" + getName() + ", quantity=" + getQuantity()
+                + "]";
     }
 }

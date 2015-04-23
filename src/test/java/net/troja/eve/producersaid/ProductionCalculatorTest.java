@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -52,57 +52,57 @@ public class ProductionCalculatorTest {
     private static final float MATERIAL_PRICE_BUY2 = 24f;
     private static final float MATERIAL_PRICE_SELL1 = 15f;
     private static final float MATERIAL_PRICE_SELL2 = 30f;
-    
+
     @Mock
     private EveCentral eveCentral;
-    
+
     @Mock
     private Map<Integer, Double> basePrices;
-    
+
     @Before
     public void setup() {
-	MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
-    
+
     @Test
     public void testCaculation() {
-	ProductionCalculator calculator = new ProductionCalculator(eveCentral, basePrices, FACILITY_COST);
-	EveCentralPrice productPrice = new EveCentralPrice();
-	productPrice.setSell5Percent(PRODUCT_PRICE);
-	when(eveCentral.getPrice(PRODUCT_ID)).thenReturn(productPrice);
-	EveCentralPrice materialPrice1 = new EveCentralPrice();
-	materialPrice1.setBuy5Percent(MATERIAL_PRICE_BUY1);
-	materialPrice1.setSell5Percent(MATERIAL_PRICE_SELL1);
-	EveCentralPrice materialPrice2 = new EveCentralPrice();
-	materialPrice2.setBuy5Percent(MATERIAL_PRICE_BUY2);
-	materialPrice2.setSell5Percent(MATERIAL_PRICE_SELL2);
-	HashMap<Integer, EveCentralPrice> map = new HashMap<Integer, EveCentralPrice>();
-	map.put(MATERIAL_ID1, materialPrice1);
-	map.put(MATERIAL_ID2, materialPrice2);
-	when(eveCentral.getPrices(Arrays.asList(MATERIAL_ID1, MATERIAL_ID2))).thenReturn(map);
-	when(basePrices.get(MATERIAL_ID1)).thenReturn((double) MATERIAL_PRICE_BUY1);
-	when(basePrices.get(MATERIAL_ID2)).thenReturn((double) MATERIAL_PRICE_BUY2);
-	
-	Blueprint blueprint = createBlueprint();
-	BlueprintProduction result = calculator.calc(blueprint);
-	
-	assertThat(result.getProductPrice(), is(equalTo((double)(PRODUCT_PRICE * 100))));
-	double buyPrice = (double)((MATERIAL_PRICE_BUY1 * 50) + (MATERIAL_PRICE_BUY2 * 25));
-	assertThat(result.getMaterialPriceBuy(), is(equalTo(buyPrice)));
-	assertThat(result.getMaterialPriceSell(), is(equalTo((double)((MATERIAL_PRICE_SELL1 * 50) + (MATERIAL_PRICE_SELL2 * 25)))));
-	double prodPrice = buyPrice * 1.1 * FACILITY_COST;
-	assertThat(result.getProductionCost(), is(equalTo(prodPrice)));
+        final ProductionCalculator calculator = new ProductionCalculator(eveCentral, basePrices, FACILITY_COST);
+        final EveCentralPrice productPrice = new EveCentralPrice();
+        productPrice.setSell5Percent(PRODUCT_PRICE);
+        when(eveCentral.getPrice(PRODUCT_ID)).thenReturn(productPrice);
+        final EveCentralPrice materialPrice1 = new EveCentralPrice();
+        materialPrice1.setBuy5Percent(MATERIAL_PRICE_BUY1);
+        materialPrice1.setSell5Percent(MATERIAL_PRICE_SELL1);
+        final EveCentralPrice materialPrice2 = new EveCentralPrice();
+        materialPrice2.setBuy5Percent(MATERIAL_PRICE_BUY2);
+        materialPrice2.setSell5Percent(MATERIAL_PRICE_SELL2);
+        final HashMap<Integer, EveCentralPrice> map = new HashMap<Integer, EveCentralPrice>();
+        map.put(MATERIAL_ID1, materialPrice1);
+        map.put(MATERIAL_ID2, materialPrice2);
+        when(eveCentral.getPrices(Arrays.asList(MATERIAL_ID1, MATERIAL_ID2))).thenReturn(map);
+        when(basePrices.get(MATERIAL_ID1)).thenReturn((double) MATERIAL_PRICE_BUY1);
+        when(basePrices.get(MATERIAL_ID2)).thenReturn((double) MATERIAL_PRICE_BUY2);
+
+        final Blueprint blueprint = createBlueprint();
+        final BlueprintProduction result = calculator.calc(blueprint);
+
+        assertThat(result.getProductPrice(), is(equalTo((double) (PRODUCT_PRICE * 100))));
+        final double buyPrice = (MATERIAL_PRICE_BUY1 * 50) + (MATERIAL_PRICE_BUY2 * 25);
+        assertThat(result.getMaterialPriceBuy(), is(equalTo(buyPrice)));
+        assertThat(result.getMaterialPriceSell(), is(equalTo((double) ((MATERIAL_PRICE_SELL1 * 50) + (MATERIAL_PRICE_SELL2 * 25)))));
+        final double prodPrice = buyPrice * 1.1 * FACILITY_COST;
+        assertThat(result.getProductionCost(), is(equalTo(prodPrice)));
     }
 
     private Blueprint createBlueprint() {
-	Blueprint blueprint = new Blueprint();
-	BlueprintActivity manufacturing = new BlueprintActivity();
-	manufacturing.setProducts(Arrays.asList(new BlueprintProduct(PRODUCT_ID, "Product", 100, 0)));
-	List<BlueprintMaterial> materials = new ArrayList<>();
-	materials.add(new BlueprintMaterial(MATERIAL_ID1, "Material 1", 50));
-	materials.add(new BlueprintMaterial(MATERIAL_ID2, "Material 2", 25));
-	manufacturing.setMaterials(materials);
-	blueprint.setManufacturing(manufacturing);
-	return blueprint;
+        final Blueprint blueprint = new Blueprint();
+        final BlueprintActivity manufacturing = new BlueprintActivity();
+        manufacturing.setProducts(Arrays.asList(new BlueprintProduct(PRODUCT_ID, "Product", 100, 0)));
+        final List<BlueprintMaterial> materials = new ArrayList<>();
+        materials.add(new BlueprintMaterial(MATERIAL_ID1, "Material 1", 50));
+        materials.add(new BlueprintMaterial(MATERIAL_ID2, "Material 2", 25));
+        manufacturing.setMaterials(materials);
+        blueprint.setManufacturing(manufacturing);
+        return blueprint;
     }
 }

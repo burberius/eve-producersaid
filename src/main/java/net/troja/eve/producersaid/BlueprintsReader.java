@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -57,121 +57,121 @@ public class BlueprintsReader {
     private static final String NODE_LEVEL = "level";
 
     private String blueprintsFile = "blueprints.yaml";
-    private ObjectMapper mapper;
-    private Map<Integer, InvType> invTypes;
+    private final ObjectMapper mapper;
+    private final Map<Integer, InvType> invTypes;
 
-    public BlueprintsReader(Map<Integer, InvType> invTypes) {
-	mapper = new ObjectMapper(new YAMLFactory());
-	this.invTypes = invTypes;
+    public BlueprintsReader(final Map<Integer, InvType> invTypes) {
+        mapper = new ObjectMapper(new YAMLFactory());
+        this.invTypes = invTypes;
     }
 
-    public void setBlueprintsFile(String blueprintsFile) {
-	this.blueprintsFile = blueprintsFile;
+    public void setBlueprintsFile(final String blueprintsFile) {
+        this.blueprintsFile = blueprintsFile;
     }
 
     public List<Blueprint> getBlueprints() {
-	List<Blueprint> blueprints = new ArrayList<Blueprint>();
-	InputStream resourceStream = getClass().getResourceAsStream("/" + blueprintsFile);
-	try {
-	    JsonNode root = mapper.readTree(resourceStream);
-	    Iterator<JsonNode> elements = root.elements();
-	    while (elements.hasNext()) {
-		JsonNode current = elements.next();
-		Blueprint blueprint = processBlueprint(current);
-		if (blueprint != null) {
-		    blueprints.add(blueprint);
-		}
-	    }
-	} catch (JsonProcessingException e) {
-	    LOGGER.error("Could not parse blueprints file!");
-	} catch (IOException e) {
-	    LOGGER.error("Could not read blueprints file: " + blueprintsFile);
-	}
-	return blueprints;
+        final List<Blueprint> blueprints = new ArrayList<Blueprint>();
+        final InputStream resourceStream = getClass().getResourceAsStream("/" + blueprintsFile);
+        try {
+            final JsonNode root = mapper.readTree(resourceStream);
+            final Iterator<JsonNode> elements = root.elements();
+            while (elements.hasNext()) {
+                final JsonNode current = elements.next();
+                final Blueprint blueprint = processBlueprint(current);
+                if (blueprint != null) {
+                    blueprints.add(blueprint);
+                }
+            }
+        } catch (final JsonProcessingException e) {
+            LOGGER.error("Could not parse blueprints file!");
+        } catch (final IOException e) {
+            LOGGER.error("Could not read blueprints file: " + blueprintsFile);
+        }
+        return blueprints;
     }
 
-    private Blueprint processBlueprint(JsonNode node) {
-	int typeId = node.path(NODE_BLUEPRINTTYPEID).asInt();
-	if (!invTypes.containsKey(typeId)) {
-	    return null;
-	}
-	Blueprint blueprint = new Blueprint();
-	blueprint.setId(typeId);
-	blueprint.setName(getName(blueprint.getId()));
-	blueprint.setMaxProductionLimit(node.path(NODE_MAXPRODUCTIONLIMIT).asInt());
+    private Blueprint processBlueprint(final JsonNode node) {
+        final int typeId = node.path(NODE_BLUEPRINTTYPEID).asInt();
+        if (!invTypes.containsKey(typeId)) {
+            return null;
+        }
+        final Blueprint blueprint = new Blueprint();
+        blueprint.setId(typeId);
+        blueprint.setName(getName(blueprint.getId()));
+        blueprint.setMaxProductionLimit(node.path(NODE_MAXPRODUCTIONLIMIT).asInt());
 
-	Iterator<Entry<String, JsonNode>> activities = node.path(NODE_ACTIVITIES).fields();
-	while (activities.hasNext()) {
-	    Entry<String, JsonNode> work = activities.next();
-	    BlueprintActivity activity = processActivity(work.getValue());
-	    switch (work.getKey()) {
-	    case "copying":
-		blueprint.setCopying(activity);
-		break;
-	    case "invention":
-		blueprint.setInvention(activity);
-		break;
-	    case "manufacturing":
-		blueprint.setManufacturing(activity);
-		break;
-	    case "research_material":
-		blueprint.setResearchMaterial(activity);
-		break;
-	    case "research_time":
-		blueprint.setResearchTime(activity);
-		break;
-	    default:
-		break;
-	    }
-	}
+        final Iterator<Entry<String, JsonNode>> activities = node.path(NODE_ACTIVITIES).fields();
+        while (activities.hasNext()) {
+            final Entry<String, JsonNode> work = activities.next();
+            final BlueprintActivity activity = processActivity(work.getValue());
+            switch (work.getKey()) {
+                case "copying":
+                    blueprint.setCopying(activity);
+                    break;
+                case "invention":
+                    blueprint.setInvention(activity);
+                    break;
+                case "manufacturing":
+                    blueprint.setManufacturing(activity);
+                    break;
+                case "research_material":
+                    blueprint.setResearchMaterial(activity);
+                    break;
+                case "research_time":
+                    blueprint.setResearchTime(activity);
+                    break;
+                default:
+                    break;
+            }
+        }
 
-	return blueprint;
+        return blueprint;
     }
 
-    private BlueprintActivity processActivity(JsonNode node) {
-	BlueprintActivity activity = new BlueprintActivity();
-	activity.setTime(node.path(NODE_TIME).asInt());
+    private BlueprintActivity processActivity(final JsonNode node) {
+        final BlueprintActivity activity = new BlueprintActivity();
+        activity.setTime(node.path(NODE_TIME).asInt());
 
-	JsonNode materials = node.path(NODE_MATERIALS);
-	if (materials != null && !materials.isMissingNode()) {
-	    Iterator<JsonNode> elements = materials.elements();
-	    while (elements.hasNext()) {
-		JsonNode element = elements.next();
-		int typeId = element.get(NODE_TYPEID).asInt();
-		activity.addMaterial(new BlueprintMaterial(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt()));
-	    }
-	}
+        final JsonNode materials = node.path(NODE_MATERIALS);
+        if ((materials != null) && !materials.isMissingNode()) {
+            final Iterator<JsonNode> elements = materials.elements();
+            while (elements.hasNext()) {
+                final JsonNode element = elements.next();
+                final int typeId = element.get(NODE_TYPEID).asInt();
+                activity.addMaterial(new BlueprintMaterial(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt()));
+            }
+        }
 
-	JsonNode products = node.path(NODE_PRODUCTS);
-	if (products != null && !products.isMissingNode()) {
-	    Iterator<JsonNode> elements = products.elements();
-	    while (elements.hasNext()) {
-		JsonNode element = elements.next();
-		JsonNode probability = element.get(NODE_PROBABILITY);
-		float prob = probability != null ? probability.floatValue() : 0f;
-		int typeId = element.get(NODE_TYPEID).asInt();
-		activity.addProduct(new BlueprintProduct(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt(), prob));
-	    }
-	}
+        final JsonNode products = node.path(NODE_PRODUCTS);
+        if ((products != null) && !products.isMissingNode()) {
+            final Iterator<JsonNode> elements = products.elements();
+            while (elements.hasNext()) {
+                final JsonNode element = elements.next();
+                final JsonNode probability = element.get(NODE_PROBABILITY);
+                final float prob = probability != null ? probability.floatValue() : 0f;
+                final int typeId = element.get(NODE_TYPEID).asInt();
+                activity.addProduct(new BlueprintProduct(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt(), prob));
+            }
+        }
 
-	JsonNode skills = node.path(NODE_SKILLS);
-	if (skills != null && !skills.isMissingNode()) {
-	    Iterator<JsonNode> elements = skills.elements();
-	    while (elements.hasNext()) {
-		JsonNode element = elements.next();
-		int typeId = element.get(NODE_TYPEID).asInt();
-		activity.addSkill(new BlueprintSkill(typeId, getName(typeId), element.get(NODE_LEVEL).asInt()));
-	    }
-	}
-	return activity;
+        final JsonNode skills = node.path(NODE_SKILLS);
+        if ((skills != null) && !skills.isMissingNode()) {
+            final Iterator<JsonNode> elements = skills.elements();
+            while (elements.hasNext()) {
+                final JsonNode element = elements.next();
+                final int typeId = element.get(NODE_TYPEID).asInt();
+                activity.addSkill(new BlueprintSkill(typeId, getName(typeId), element.get(NODE_LEVEL).asInt()));
+            }
+        }
+        return activity;
     }
 
-    private String getName(int typeId) {
-	InvType invType = invTypes.get(typeId);
-	if (invType == null) {
-	    LOGGER.warn("InvType not found for id: " + typeId);
-	    return "unknown";
-	}
-	return invType.getName();
+    private String getName(final int typeId) {
+        final InvType invType = invTypes.get(typeId);
+        if (invType == null) {
+            LOGGER.warn("InvType not found for id: " + typeId);
+            return "unknown";
+        }
+        return invType.getName();
     }
 }

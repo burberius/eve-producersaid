@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -32,48 +32,48 @@ public class BlueprintActivity {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(final int time) {
         this.time = time;
     }
 
-    public void addMaterial(BlueprintMaterial blueprintMaterials) {
-	materials.add(blueprintMaterials);
+    public void addMaterial(final BlueprintMaterial blueprintMaterials) {
+        materials.add(blueprintMaterials);
     }
 
     public List<BlueprintMaterial> getMaterials() {
         return materials;
     }
 
-    public void setMaterials(List<BlueprintMaterial> materials) {
+    public void setMaterials(final List<BlueprintMaterial> materials) {
         this.materials = materials;
     }
-    
-    public void addProduct(BlueprintProduct blueprintProduct) {
-	products.add(blueprintProduct);
+
+    public void addProduct(final BlueprintProduct blueprintProduct) {
+        products.add(blueprintProduct);
     }
-    
+
     public List<BlueprintProduct> getProducts() {
         return products;
     }
 
-    public void setProducts(List<BlueprintProduct> products) {
+    public void setProducts(final List<BlueprintProduct> products) {
         this.products = products;
     }
 
-    public void addSkill(BlueprintSkill blueprintSkill) {
-	skills.add(blueprintSkill);	
+    public void addSkill(final BlueprintSkill blueprintSkill) {
+        skills.add(blueprintSkill);
     }
-    
+
     public List<BlueprintSkill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<BlueprintSkill> skills) {
+    public void setSkills(final List<BlueprintSkill> skills) {
         this.skills = skills;
     }
 
     @Override
     public String toString() {
-	return "BlueprintActivity [time=" + time + ", materials=" + materials + ", products=" + products + ", skills=" + skills + "]";
+        return "BlueprintActivity [time=" + time + ", materials=" + materials + ", products=" + products + ", skills=" + skills + "]";
     }
 }

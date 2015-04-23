@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -33,14 +33,14 @@ import org.junit.Test;
 public class InvTypesReaderTest {
     @Test
     public void testRead() {
-	InvTypesReader reader = new InvTypesReader();
-	reader.setDataFile("testInvTypes.csv");
-	reader.setTechFile("testDgmTypeAttributes.csv");
-	Map<Integer, InvType> invTypes = reader.getInvTypes();
-	assertNotNull(invTypes);
-	assertTrue(invTypes.size() > 0);
-	InvType trit = invTypes.get(34);
-	assertThat(trit.getVolume(), is(0.01d));
-	assertThat(trit.getTechLevel(), is(4));
+        final InvTypesReader reader = new InvTypesReader();
+        reader.setDataFile("testInvTypes.csv");
+        reader.setTechFile("testDgmTypeAttributes.csv");
+        final Map<Integer, InvType> invTypes = reader.getInvTypes();
+        assertNotNull(invTypes);
+        assertTrue(invTypes.size() > 0);
+        final InvType trit = invTypes.get(34);
+        assertThat(trit.getVolume(), is(0.01d));
+        assertThat(trit.getTechLevel(), is(4));
     }
 }

@@ -3,7 +3,7 @@
  *
  * This file is part of Eve Producer's Aid.
  *
- * Eve Producer's Aid is free software: you can redistribute it and/or 
+ * Eve Producer's Aid is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
@@ -24,39 +24,39 @@ public class BlueprintSkill {
     private String name;
     private int level;
 
-    public BlueprintSkill(int typeId, String name, int level) {
-	super();
-	this.typeId = typeId;
-	this.name = name;
-	this.level = level;
+    public BlueprintSkill(final int typeId, final String name, final int level) {
+        super();
+        this.typeId = typeId;
+        this.name = name;
+        this.level = level;
     }
 
     public int getTypeId() {
-	return typeId;
+        return typeId;
     }
 
-    public void setTypeId(int typeId) {
-	this.typeId = typeId;
+    public void setTypeId(final int typeId) {
+        this.typeId = typeId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public int getLevel() {
-	return level;
+        return level;
     }
 
-    public void setLevel(int level) {
-	this.level = level;
+    public void setLevel(final int level) {
+        this.level = level;
     }
 
     @Override
     public String toString() {
-	return "BlueprintSkill [typeId=" + typeId + ", name=" + name + ", level=" + level + "]";
+        return "BlueprintSkill [typeId=" + typeId + ", name=" + name + ", level=" + level + "]";
     }
 }
