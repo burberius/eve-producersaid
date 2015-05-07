@@ -4,7 +4,7 @@ package net.troja.eve.producersaid;
  * ========================================================================
  * Eve Producer's Aid
  * ------------------------------------------------------------------------
- * Copyright (C) 2014 - 2015 Jens Oberender <j.obi@troja.net>
+ * Copyright (C) 2015 Jens Oberender <j.obi@troja.net>
  * ------------------------------------------------------------------------
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
