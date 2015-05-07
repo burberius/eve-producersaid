@@ -79,7 +79,7 @@
         <dependency>
             <groupId>net.troja.eve</groupId>
             <artifactId>crest</artifactId>
-            <version>0.1.1</version>
+            <version>0.3.0</version>
         </dependency>
         <!-- Spring -->
         <dependency>
@@ -125,10 +125,10 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.8t</version>
                 <configuration>
                     <organizationName>Jens Oberender &lt;j.obi@troja.net&gt;</organizationName>
-                    <inceptionYear>2014</inceptionYear>
+                    <inceptionYear>2015</inceptionYear>
                     <licenseName>gpl_v3</licenseName>
                     <processStartTag>========================================================================</processStartTag>
                     <sectionDelimiter>------------------------------------------------------------------------</sectionDelimiter>

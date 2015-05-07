@@ -10,26 +10,62 @@ package net.troja.eve.producersaid.data;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * ========================================================================
  */
 
-import net.troja.eve.producersaid.utils.EveFormatter;
 
 public class BlueprintProduction {
     private double productPrice;
     private double materialPriceBuy;
     private double materialPriceSell;
     private double productionCost;
-    private Blueprint blueprint;
+    private double productionBasePrice;
+    private long updateTime;
+    private int blueprintTypeId;
+    private String blueprintName;
+    private int productTypeId;
+    private String productName;
+    private int productQuantity;
+    private int perfectME;
+
+    public BlueprintProduction() {
+        super();
+    }
+
+    public BlueprintProduction(final BlueprintProduction original, final double costIndex) {
+        super();
+        productPrice = original.getProductPrice();
+        materialPriceBuy = original.getMaterialPriceBuy();
+        materialPriceSell = original.getMaterialPriceSell();
+        updateTime = original.getUpdateTime();
+        productionBasePrice = original.getProductionBasePrice();
+        productionCost = original.getProductionBasePrice() * costIndex * 1.1;
+        blueprintTypeId = original.getBlueprintTypeId();
+        blueprintName = original.getBlueprintName();
+        perfectME = original.getPerfectME();
+        productTypeId = original.getProductTypeId();
+        productName = original.getProductName();
+        productQuantity = original.getProductQuantity();
+    }
+
+    public void addBlueprintData(final Blueprint blueprint) {
+        blueprintTypeId = blueprint.getId();
+        blueprintName = blueprint.getName();
+        perfectME = blueprint.getMaterialEfficiency();
+        final BlueprintProduct blueprintProduct = blueprint.getManufacturing().getProducts().get(0);
+        productTypeId = blueprintProduct.getTypeId();
+        productName = blueprintProduct.getName();
+        productQuantity = blueprintProduct.getQuantity();
+    }
 
     public void setProductPrice(final double productPrice) {
         this.productPrice = productPrice;
@@ -55,14 +91,6 @@ public class BlueprintProduction {
         this.materialPriceSell = materialPriceSell;
     }
 
-    public Blueprint getBlueprint() {
-        return blueprint;
-    }
-
-    public void setBlueprint(final Blueprint blueprint) {
-        this.blueprint = blueprint;
-    }
-
     public double getProductionCost() {
         return productionCost;
     }
@@ -71,10 +99,75 @@ public class BlueprintProduction {
         this.productionCost = productionCost;
     }
 
+    public double getProductionBasePrice() {
+        return productionBasePrice;
+    }
+
+    public void setProductionBasePrice(final double productionBasePrice) {
+        this.productionBasePrice = productionBasePrice;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(final long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public int getBlueprintTypeId() {
+        return blueprintTypeId;
+    }
+
+    public void setBlueprintTypeId(final int blueprintTypeId) {
+        this.blueprintTypeId = blueprintTypeId;
+    }
+
+    public String getBlueprintName() {
+        return blueprintName;
+    }
+
+    public void setBlueprintName(final String blueprintName) {
+        this.blueprintName = blueprintName;
+    }
+
+    public int getProductTypeId() {
+        return productTypeId;
+    }
+
+    public void setProductTypeId(final int productTypeId) {
+        this.productTypeId = productTypeId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(final String productName) {
+        this.productName = productName;
+    }
+
+    public int getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(final int productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
+    public int getPerfectME() {
+        return perfectME;
+    }
+
+    public void setPerfectME(final int perfectME) {
+        this.perfectME = perfectME;
+    }
+
     @Override
     public String toString() {
-        return "BlueprintProduction [productPrice=" + EveFormatter.formatIsk(productPrice) + ", materialPriceBuy="
-                + EveFormatter.formatIsk(materialPriceBuy) + ", materialPriceSell=" + EveFormatter.formatIsk(materialPriceSell) + ", productionCost="
-                + EveFormatter.formatIsk(productionCost) + ", blueprint=" + blueprint + "]";
+        return "BlueprintProduction [productPrice=" + productPrice + ", materialPriceBuy=" + materialPriceBuy + ", materialPriceSell="
+                + materialPriceSell + ", productionCost=" + productionCost + ", productionBasePrice=" + productionBasePrice + ", updateTime="
+                + updateTime + ", blueprintTypeId=" + blueprintTypeId + ", blueprintName=" + blueprintName + ", productTypeId=" + productTypeId
+                + ", productName=" + productName + ", productQuantity=" + productQuantity + ", perfectME=" + perfectME + "]";
     }
 }

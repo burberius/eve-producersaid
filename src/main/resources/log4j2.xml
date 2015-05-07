@@ -6,11 +6,11 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="net.troja.eve" level="trace">
+        <Logger name="net.troja.eve" level="trace" additivity="false">
             <AppenderRef ref="Console" />
         </Logger>
-        <Root level="error">
-            <AppenderRef ref="Console" />
+        <Root level="error" additivity="false">
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>

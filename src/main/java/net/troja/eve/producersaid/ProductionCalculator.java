@@ -10,12 +10,12 @@ package net.troja.eve.producersaid;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -26,44 +26,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.troja.eve.crest.CrestHandler;
 import net.troja.eve.producersaid.data.Blueprint;
 import net.troja.eve.producersaid.data.BlueprintMaterial;
 import net.troja.eve.producersaid.data.BlueprintProduct;
 import net.troja.eve.producersaid.data.BlueprintProduction;
 import net.troja.eve.producersaid.data.EveCentralPrice;
 
-public class ProductionCalculator {
-    private final EveCentral eveCentral;
-    private final Map<Integer, Double> basePrices;
-    private final double costIndex;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-    public ProductionCalculator(final EveCentral eveCentral, final Map<Integer, Double> basePrices, final double costIndex) {
+public class ProductionCalculator {
+    private static final Logger LOGGER = LogManager.getLogger(ProductionCalculator.class);
+    private final EveCentral eveCentral;
+    private final CrestHandler crestHandler;
+
+    public ProductionCalculator(final EveCentral eveCentral, final CrestHandler crestHandler) {
         this.eveCentral = eveCentral;
-        this.basePrices = basePrices;
-        this.costIndex = costIndex;
+        this.crestHandler = crestHandler;
     }
 
     public BlueprintProduction calc(final Blueprint blueprint) {
+        LOGGER.info("Calculating " + blueprint.getName());
         final BlueprintProduction production = new BlueprintProduction();
         production.setProductPrice(calcProductPrice(blueprint));
         production.setMaterialPriceBuy(calcMaterialPriceBuy(blueprint));
         production.setMaterialPriceSell(calcMaterialPriceSell(blueprint));
-        production.setProductionCost(calcProductionCosts(blueprint));
-        production.setBlueprint(blueprint);
+        production.setProductionBasePrice(calcProductionBasePrice(blueprint));
+        production.setUpdateTime(System.currentTimeMillis());
+        production.addBlueprintData(blueprint);
         return production;
     }
 
-    private double calcProductionCosts(final Blueprint blueprint) {
+    private double calcProductionBasePrice(final Blueprint blueprint) {
         double result = 0d;
         final List<BlueprintMaterial> materials = blueprint.getManufacturing().getMaterials();
         for (final BlueprintMaterial material : materials) {
-            final Double price = basePrices.get(material.getTypeId());
+            final Double price = crestHandler.getMarketPrice(material.getTypeId()).getAdjustedPrice();
             if (price == null) {
                 return 0d;
             }
             result += material.getQuantity() * price;
         }
-        result = result * costIndex * 1.1;
         return result;
     }
 
