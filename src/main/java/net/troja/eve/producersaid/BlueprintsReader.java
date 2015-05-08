@@ -10,12 +10,12 @@ package net.troja.eve.producersaid;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -86,11 +86,27 @@ public class BlueprintsReader {
                 }
             }
         } catch (final JsonProcessingException e) {
-            LOGGER.error("Could not parse blueprints file!");
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Could not parse blueprints file!", e);
+            }
         } catch (final IOException e) {
-            LOGGER.error("Could not read blueprints file: " + blueprintsFile);
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Could not read blueprints file: " + blueprintsFile, e);
+            }
+        } finally {
+            if (resourceStream != null) {
+                try {
+                    resourceStream.close();
+                } catch (final IOException e) {
+                    if (LOGGER.isErrorEnabled()) {
+                        LOGGER.error("Could not close stream", e);
+                    }
+                }
+            }
         }
-        LOGGER.info("Loaded " + blueprints.size() + " blueprints");
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Loaded " + blueprints.size() + " blueprints");
+        }
         return blueprints;
     }
 
@@ -171,11 +187,11 @@ public class BlueprintsReader {
     }
 
     private String getName(final int typeId) {
+        String name = "unknown";
         final InvType invType = invTypes.get(typeId);
-        if (invType == null) {
-            LOGGER.warn("InvType not found for id: " + typeId);
-            return "unknown";
+        if (invType != null) {
+            name = invType.getName();
         }
-        return invType.getName();
+        return name;
     }
 }

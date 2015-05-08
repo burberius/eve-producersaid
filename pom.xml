@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.troja.eve</groupId>
     <artifactId>producersaid</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -125,7 +125,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>1.8t</version>
+                <version>1.8</version>
                 <configuration>
                     <organizationName>Jens Oberender &lt;j.obi@troja.net&gt;</organizationName>
                     <inceptionYear>2015</inceptionYear>

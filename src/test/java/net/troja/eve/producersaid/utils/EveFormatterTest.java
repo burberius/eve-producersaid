@@ -1,4 +1,4 @@
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.utils;
 
 /*
  * ========================================================================
@@ -22,23 +22,26 @@ package net.troja.eve.producersaid;
  * ========================================================================
  */
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
-@SpringBootApplication
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
-public class Application {
-    /**
-     * Start method
-     *
-     * @param args
-     */
-    public static void main(final String... args) {
-        SpringApplication.run(Application.class, args);
+import org.junit.Test;
+
+public class EveFormatterTest {
+    private static final double WITH_DECIMAL = 1234.5678d;
+    private static final String RESULT_WITH_DECIMAL = "1.234,57";
+    private static final String RESULT_WITH_DECIMAL_WITHOUT_THEM = "1.235";
+    private static final double WITHOUT_DECIMAL = 12345678d;
+    private static final String RESULT_WITHOUT_DECIMAL = "12.345.678";
+
+    @Test
+    public void testWithDecimal() {
+        assertThat(EveFormatter.formatIsk(WITH_DECIMAL), equalTo(RESULT_WITH_DECIMAL));
+        assertThat(EveFormatter.formatIskWithoutDecimals(WITH_DECIMAL), equalTo(RESULT_WITH_DECIMAL_WITHOUT_THEM));
+    }
+
+    @Test
+    public void testWithoutDecimal() {
+        assertThat(EveFormatter.formatIskWithoutDecimals(WITHOUT_DECIMAL), equalTo(RESULT_WITHOUT_DECIMAL));
     }
 }
