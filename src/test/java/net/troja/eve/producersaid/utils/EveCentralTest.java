@@ -1,4 +1,4 @@
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.utils;
 
 /*
  * ========================================================================
@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import net.troja.eve.producersaid.data.EveCentralPrice;
+import net.troja.eve.producersaid.utils.EveCentral;
 
 import org.junit.Before;
 import org.junit.Ignore;

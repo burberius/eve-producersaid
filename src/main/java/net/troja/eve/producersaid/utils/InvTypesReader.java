@@ -1,4 +1,4 @@
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.utils;
 
 /*
  * ========================================================================

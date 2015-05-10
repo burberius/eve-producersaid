@@ -1,4 +1,4 @@
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.utils;
 
 /*
  * ========================================================================
@@ -156,9 +156,7 @@ public class BlueprintsReader {
         if ((materials != null) && !materials.isMissingNode()) {
             final Iterator<JsonNode> elements = materials.elements();
             while (elements.hasNext()) {
-                final JsonNode element = elements.next();
-                final int typeId = element.get(NODE_TYPEID).asInt();
-                activity.addMaterial(new BlueprintMaterial(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt()));
+                activity.addMaterial(processMaterial(elements.next()));
             }
         }
 
@@ -166,11 +164,7 @@ public class BlueprintsReader {
         if ((products != null) && !products.isMissingNode()) {
             final Iterator<JsonNode> elements = products.elements();
             while (elements.hasNext()) {
-                final JsonNode element = elements.next();
-                final JsonNode probability = element.get(NODE_PROBABILITY);
-                final float prob = probability != null ? probability.floatValue() : 0f;
-                final int typeId = element.get(NODE_TYPEID).asInt();
-                activity.addProduct(new BlueprintProduct(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt(), prob));
+                activity.addProduct(processProduct(elements.next()));
             }
         }
 
@@ -178,12 +172,30 @@ public class BlueprintsReader {
         if ((skills != null) && !skills.isMissingNode()) {
             final Iterator<JsonNode> elements = skills.elements();
             while (elements.hasNext()) {
-                final JsonNode element = elements.next();
-                final int typeId = element.get(NODE_TYPEID).asInt();
-                activity.addSkill(new BlueprintSkill(typeId, getName(typeId), element.get(NODE_LEVEL).asInt()));
+                activity.addSkill(parseSkill(elements.next()));
             }
         }
         return activity;
+    }
+
+    private BlueprintMaterial processMaterial(final JsonNode element) {
+        final int typeId = element.get(NODE_TYPEID).asInt();
+        return new BlueprintMaterial(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt());
+    }
+
+    private BlueprintProduct processProduct(final JsonNode element) {
+        final JsonNode probability = element.get(NODE_PROBABILITY);
+        float prob = 0f;
+        if (probability != null) {
+            prob = probability.floatValue();
+        }
+        final int typeId = element.get(NODE_TYPEID).asInt();
+        return new BlueprintProduct(typeId, getName(typeId), element.get(NODE_QUANTITY).asInt(), prob, getTechLevel(typeId));
+    }
+
+    private BlueprintSkill parseSkill(final JsonNode element) {
+        final int typeId = element.get(NODE_TYPEID).asInt();
+        return new BlueprintSkill(typeId, getName(typeId), element.get(NODE_LEVEL).asInt());
     }
 
     private String getName(final int typeId) {
@@ -193,5 +205,14 @@ public class BlueprintsReader {
             name = invType.getName();
         }
         return name;
+    }
+
+    private int getTechLevel(final int typeId) {
+        int result = 0;
+        final InvType invType = invTypes.get(typeId);
+        if (invType != null) {
+            result = invType.getTechLevel();
+        }
+        return result;
     }
 }

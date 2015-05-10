@@ -1,4 +1,4 @@
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.utils;
 
 /*
  * ========================================================================
@@ -10,12 +10,12 @@ package net.troja.eve.producersaid;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -35,6 +35,7 @@ import java.util.Map;
 
 import net.troja.eve.producersaid.data.Blueprint;
 import net.troja.eve.producersaid.data.BlueprintActivity;
+import net.troja.eve.producersaid.data.BlueprintProduct;
 import net.troja.eve.producersaid.data.InvType;
 
 import org.junit.Before;
@@ -43,11 +44,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class BlueprintsReaderTest {
+    private static final String BPO = "Raven Blueprint";
+    private static final String SHIP = "Raven";
+
     @Mock
     private Map<Integer, InvType> invTypes;
 
     @Before
-    public void setup() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
     }
 
@@ -56,7 +60,13 @@ public class BlueprintsReaderTest {
         final BlueprintsReader reader = new BlueprintsReader(invTypes);
         reader.setBlueprintsFile("testBlueprints.yaml");
         when(invTypes.containsKey(any(Integer.class))).thenReturn(true);
-        when(invTypes.get(any(Integer.class))).thenReturn(new InvType());
+        final InvType ravenBpo = new InvType();
+        ravenBpo.setName(BPO);
+        when(invTypes.get(688)).thenReturn(ravenBpo);
+        final InvType raven = new InvType();
+        raven.setName(SHIP);
+        raven.setTechLevel(4);
+        when(invTypes.get(638)).thenReturn(raven);
 
         final List<Blueprint> blueprints = reader.getBlueprints();
         assertThat(blueprints, not(is(nullValue())));
@@ -68,7 +78,9 @@ public class BlueprintsReaderTest {
         assertThat(manufacturing.getTime(), is(equalTo(18000)));
         assertThat(manufacturing.getMaterials().size(), is(equalTo(7)));
         assertThat(manufacturing.getProducts().size(), is(equalTo(1)));
-        assertThat(manufacturing.getProducts().get(0).getTypeId(), is(equalTo(638)));
+        final BlueprintProduct product = manufacturing.getProducts().get(0);
+        assertThat(product.getTypeId(), is(equalTo(638)));
+        assertThat(product.getTechLevel(), equalTo(4));
         assertThat(manufacturing.getSkills().size(), is(equalTo(1)));
     }
 }

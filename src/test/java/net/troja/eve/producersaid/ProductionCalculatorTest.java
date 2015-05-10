@@ -10,12 +10,12 @@ package net.troja.eve.producersaid;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -41,6 +41,7 @@ import net.troja.eve.producersaid.data.BlueprintMaterial;
 import net.troja.eve.producersaid.data.BlueprintProduct;
 import net.troja.eve.producersaid.data.BlueprintProduction;
 import net.troja.eve.producersaid.data.EveCentralPrice;
+import net.troja.eve.producersaid.utils.EveCentral;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -118,7 +119,7 @@ public class ProductionCalculatorTest {
     private Blueprint createBlueprint() {
         final Blueprint blueprint = new Blueprint();
         final BlueprintActivity manufacturing = new BlueprintActivity();
-        manufacturing.setProducts(Arrays.asList(new BlueprintProduct(PRODUCT_ID, "Product", PRODUCT_QUANTITY, 0)));
+        manufacturing.setProducts(Arrays.asList(new BlueprintProduct(PRODUCT_ID, "Product", PRODUCT_QUANTITY, 0, 1)));
         final List<BlueprintMaterial> materials = new ArrayList<>();
         materials.add(new BlueprintMaterial(MATERIAL_ID1, "Material 1", 50));
         materials.add(new BlueprintMaterial(MATERIAL_ID2, "Material 2", 25));

@@ -1,4 +1,4 @@
-package net.troja.eve.producersaid;
+package net.troja.eve.producersaid.utils;
 
 /*
  * ========================================================================
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Map;
 
 import net.troja.eve.producersaid.data.InvType;
+import net.troja.eve.producersaid.utils.InvTypesReader;
 
 import org.junit.Test;
 

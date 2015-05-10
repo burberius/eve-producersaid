@@ -10,12 +10,12 @@ package net.troja.eve.producersaid.data;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -36,6 +36,7 @@ public class BlueprintProduction {
     private String productName;
     private int productQuantity;
     private int perfectME;
+    private int techLevel;
 
     public BlueprintProduction() {
         super();
@@ -55,6 +56,7 @@ public class BlueprintProduction {
         productTypeId = original.getProductTypeId();
         productName = original.getProductName();
         productQuantity = original.getProductQuantity();
+        techLevel = original.getTechLevel();
     }
 
     public void addBlueprintData(final Blueprint blueprint) {
@@ -65,6 +67,7 @@ public class BlueprintProduction {
         productTypeId = blueprintProduct.getTypeId();
         productName = blueprintProduct.getName();
         productQuantity = blueprintProduct.getQuantity();
+        techLevel = blueprintProduct.getTechLevel();
     }
 
     public void setProductPrice(final double productPrice) {
@@ -161,6 +164,14 @@ public class BlueprintProduction {
 
     public void setPerfectME(final int perfectME) {
         this.perfectME = perfectME;
+    }
+
+    public int getTechLevel() {
+        return techLevel;
+    }
+
+    public void setTechLevel(final int techLevel) {
+        this.techLevel = techLevel;
     }
 
     @Override
