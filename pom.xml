@@ -10,7 +10,7 @@
         <version>1.2.3.RELEASE</version>
     </parent>
 
-    <name>Eve Producer's Aid</name>
+    <name>Eve Producers Aid</name>
     <description>A tool to calculate the production cost of blueprints for Eve Online.</description>
     <url>https://github.com/burberius/eve-producersaid</url>
 
