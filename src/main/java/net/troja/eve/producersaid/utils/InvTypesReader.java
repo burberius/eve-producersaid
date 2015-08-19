@@ -10,12 +10,12 @@ package net.troja.eve.producersaid.utils;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -31,6 +31,7 @@ import net.troja.eve.producersaid.data.InvType;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,8 +64,8 @@ public class InvTypesReader {
         try {
             final InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream("/" + dataFile));
             for (final CSVRecord record : CSVFormat.EXCEL.withHeader().parse(reader)) {
-                if (!"1".equals(record.get(COLUMN_PUBLISHED))) {
-                    continue;
+                if (!"0".equals(record.get(COLUMN_PUBLISHED))) {
+                    LOGGER.info("Found published: " + record.get(COLUMN_NAME));
                 }
                 final InvType invType = new InvType();
                 invType.setId(Integer.parseInt(record.get(COLUMN_ID)));
@@ -75,17 +76,26 @@ public class InvTypesReader {
                 if ((marketGroupId != null) && (marketGroupId.trim().length() > 0)) {
                     invType.setMarketGroupId(Integer.parseInt(marketGroupId));
                 }
-                invType.setMass(Double.parseDouble(record.get(COLUMN_MASS)));
-                try {
-                    invType.setVolume(Double.parseDouble(record.get(COLUMN_VOLUME)));
-                } catch (final NumberFormatException e) {
-                    LOGGER.error("Wrong number format, the csv is probably not converted with en_US locale!");
+                final String mass = record.get(COLUMN_MASS);
+                if (!StringUtils.isEmpty(mass)) {
+                    invType.setMass(Double.parseDouble(mass));
+                }
+                final String volume = record.get(COLUMN_VOLUME);
+                if (!StringUtils.isEmpty(volume)) {
+                    try {
+                        invType.setVolume(Double.parseDouble(volume));
+                    } catch (final NumberFormatException e) {
+                        LOGGER.error("Wrong number format, the csv is probably not converted with en_US locale!");
+                    }
                 }
                 invTypes.put(invType.getId(), invType);
             }
             reader.close();
         } catch (final IOException e) {
             LOGGER.error("Could not read CSV file of InvTypes", e);
+        }
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Loaded " + invTypes.size() + " invTypes");
         }
     }
 

@@ -28,6 +28,7 @@ rm invTypes* dgmTypeAttributes* blueprint*
 # Get Blueprints
 wget -q https://www.fuzzwork.co.uk/dump/latest/blueprints.yaml.bz2
 bunzip2 blueprints.yaml.bz2
+dos2unix blueprints.yaml
 
 # Get invTypes
 wget -q https://www.fuzzwork.co.uk/dump/latest/invTypes.xls.bz2
