@@ -26,9 +26,13 @@ package net.troja.eve.producersaid.data;
 public class BlueprintProduction {
     private double productPrice;
     private double materialPriceBuy;
+    private double materialPriceBuyWithSubs;
     private double materialPriceSell;
+    private double materialPriceSellWithSubs;
     private double productionCost;
+    private double productionCostWithSubs;
     private double productionBasePrice;
+    private double productionBasePriceWithSubs;
     private long updateTime;
     private int blueprintTypeId;
     private String blueprintName;
@@ -46,10 +50,14 @@ public class BlueprintProduction {
         super();
         productPrice = original.getProductPrice();
         materialPriceBuy = original.getMaterialPriceBuy();
+        materialPriceBuyWithSubs = original.getMaterialPriceBuyWithSubs();
         materialPriceSell = original.getMaterialPriceSell();
+        materialPriceSellWithSubs = original.getMaterialPriceSellWithSubs();
         updateTime = original.getUpdateTime();
         productionBasePrice = original.getProductionBasePrice();
+        productionBasePriceWithSubs = original.getProductionBasePriceWithSubs();
         productionCost = original.getProductionBasePrice() * costIndex * 1.1;
+        productionCostWithSubs = original.getProductionBasePriceWithSubs() * costIndex * 1.1;
         blueprintTypeId = original.getBlueprintTypeId();
         blueprintName = original.getBlueprintName();
         perfectME = original.getPerfectME();
@@ -174,11 +182,45 @@ public class BlueprintProduction {
         this.techLevel = techLevel;
     }
 
+    public double getMaterialPriceBuyWithSubs() {
+        return materialPriceBuyWithSubs;
+    }
+
+    public void setMaterialPriceBuyWithSubs(final double materialPriceBuyWithSubs) {
+        this.materialPriceBuyWithSubs = materialPriceBuyWithSubs;
+    }
+
+    public double getMaterialPriceSellWithSubs() {
+        return materialPriceSellWithSubs;
+    }
+
+    public void setMaterialPriceSellWithSubs(final double materialPriceSellWithSubs) {
+        this.materialPriceSellWithSubs = materialPriceSellWithSubs;
+    }
+
+    public double getProductionCostWithSubs() {
+        return productionCostWithSubs;
+    }
+
+    public void setProductionCostWithSubs(final double productionCostWithSubs) {
+        this.productionCostWithSubs = productionCostWithSubs;
+    }
+
+    public double getProductionBasePriceWithSubs() {
+        return productionBasePriceWithSubs;
+    }
+
+    public void setProductionBasePriceWithSubs(final double productionBasePriceWithSubs) {
+        this.productionBasePriceWithSubs = productionBasePriceWithSubs;
+    }
+
     @Override
     public String toString() {
-        return "BlueprintProduction [productPrice=" + productPrice + ", materialPriceBuy=" + materialPriceBuy + ", materialPriceSell="
-                + materialPriceSell + ", productionCost=" + productionCost + ", productionBasePrice=" + productionBasePrice + ", updateTime="
-                + updateTime + ", blueprintTypeId=" + blueprintTypeId + ", blueprintName=" + blueprintName + ", productTypeId=" + productTypeId
-                + ", productName=" + productName + ", productQuantity=" + productQuantity + ", perfectME=" + perfectME + "]";
+        return "BlueprintProduction [productPrice=" + productPrice + ", materialPriceBuy=" + materialPriceBuy + ", materialPriceBuyWithSubs="
+                + materialPriceBuyWithSubs + ", materialPriceSell=" + materialPriceSell + ", materialPriceSellWithSubs=" + materialPriceSellWithSubs
+                + ", productionCost=" + productionCost + ", productionCostWithSubs=" + productionCostWithSubs + ", productionBasePrice="
+                + productionBasePrice + ", productionBasePriceWithSubs=" + productionBasePriceWithSubs + ", updateTime=" + updateTime
+                + ", blueprintTypeId=" + blueprintTypeId + ", blueprintName=" + blueprintName + ", productTypeId=" + productTypeId + ", productName="
+                + productName + ", productQuantity=" + productQuantity + ", perfectME=" + perfectME + ", techLevel=" + techLevel + "]";
     }
 }
